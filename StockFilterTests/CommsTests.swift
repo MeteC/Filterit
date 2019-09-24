@@ -76,16 +76,18 @@ class CommsTests: XCTestCase {
         continueAfterFailure = false
         let apiMgr = APIManager()
         
+        APIManager.clearCookies()
+        
         let response = apiMgr.listImages()
         let expect = expectation(description: "Wait for API")
         
         response.subscribe(onNext: { (images) in
-            XCTAssertEqual(images.count, 1)
+            XCTAssertGreaterThanOrEqual(images.count, 1)
             XCTAssertEqual(images.first!.id, 1)
-            XCTAssertEqual(images.first!.thumbUrl, "test_thumb_url")
-            XCTAssertEqual(images.first!.url, "test_url")
-            XCTAssertEqual(images.first!.title, "test_title")
-            XCTAssertEqual(images.first!.author, "test_author")
+            XCTAssertEqual(images.first!.thumbUrl, "https://MeteC.github.io/StockFilter/server/img/thumbnail/backlit-dawn-fog-2088210.jpg")
+            XCTAssertEqual(images.first!.url, "https://MeteC.github.io/StockFilter/server/img/fullsize/backlit-dawn-fog-2088210.jpg")
+            XCTAssertEqual(images.first!.title, "Silhouette of Mountain")
+            XCTAssertEqual(images.first!.author, "Eberhard Grossgasteiger @ Pexels.com")
             XCTAssertEqual(images.first!.updated, "2019-09-24 12:48:00")
             expect.fulfill()
         }, onError: { (error) in

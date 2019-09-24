@@ -56,6 +56,19 @@ class APIManager: NSObject {
     }
     
     
+    /// Kill all cookies. Prevents certain unhelpful responses from server (i.e. random 401 errors when you know you should be authorised just fine). 
+    /// Not sure this is the best way to go about the issue...
+    /// Of interest: Note that "static func" in swift == "final class func". So the difference between static and class funcs (in a class) is you can't override static...
+    public static func clearCookies() {
+        let storage = HTTPCookieStorage.shared
+        if let cookies = storage.cookies {
+            for cookie in cookies {
+                storage.deleteCookie(cookie)
+            }
+        }
+    }
+    
+    // MARK:- API Calls
     
     /// Hit our listImages endpoint, pulling the json data and returning an Observable sequence of Image arrays 
     /// - Returns: Observable wrapped [Image] from server (note it just returns the one image array before completion)

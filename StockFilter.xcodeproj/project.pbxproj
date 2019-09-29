@@ -10,7 +10,7 @@
 		B13EC4C14FBCF5A81DB34746 /* Pods_StockFilter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AF4F2708BD10CD287310B0 /* Pods_StockFilter.framework */; };
 		CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB1233A281500DDBECB /* AppDelegate.swift */; };
 		CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */; };
-		CA4F1BB6233A281500DDBECB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB5233A281500DDBECB /* ViewController.swift */; };
+		CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */; };
 		CA4F1BB9233A281500DDBECB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA4F1BB7233A281500DDBECB /* Main.storyboard */; };
 		CA4F1BBC233A281500DDBECB /* StockFilter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BBA233A281500DDBECB /* StockFilter.xcdatamodeld */; };
 		CA4F1BBE233A281600DDBECB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA4F1BBD233A281600DDBECB /* Assets.xcassets */; };
@@ -19,6 +19,7 @@
 		CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BDE233A53B500DDBECB /* APIManager.swift */; };
 		CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BE0233A558B00DDBECB /* Image.swift */; };
 		CA4F1BE3233A589600DDBECB /* CommsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BE2233A589600DDBECB /* CommsTests.swift */; };
+		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		F47C4F371F29799740F0BBE5 /* Pods_StockFilterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C63D69CDDA021FAB3E080E7 /* Pods_StockFilterTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +41,7 @@
 		CA4F1BAE233A281500DDBECB /* StockFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA4F1BB1233A281500DDBECB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CA4F1BB5233A281500DDBECB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageSelectViewController.swift; sourceTree = "<group>"; };
 		CA4F1BB8233A281500DDBECB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA4F1BBB233A281500DDBECB /* StockFilter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StockFilter.xcdatamodel; sourceTree = "<group>"; };
 		CA4F1BBD233A281600DDBECB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,6 +53,7 @@
 		CA4F1BDE233A53B500DDBECB /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		CA4F1BE0233A558B00DDBECB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CA4F1BE2233A589600DDBECB /* CommsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommsTests.swift; sourceTree = "<group>"; };
+		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D01B1A165B3361DF7738BA8D /* Pods-StockFilter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockFilter.release.xcconfig"; path = "Target Support Files/Pods-StockFilter/Pods-StockFilter.release.xcconfig"; sourceTree = "<group>"; };
 		F350D0AF239BDE448F543AE5 /* Pods-StockFilter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockFilter.debug.xcconfig"; path = "Target Support Files/Pods-StockFilter/Pods-StockFilter.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +115,8 @@
 				CA4F1BDB233A539200DDBECB /* Comms */,
 				CA4F1BB1233A281500DDBECB /* AppDelegate.swift */,
 				CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */,
-				CA4F1BB5233A281500DDBECB /* ViewController.swift */,
+				CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */,
+				CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */,
 				CA4F1BB7233A281500DDBECB /* Main.storyboard */,
 				CA4F1BBD233A281600DDBECB /* Assets.xcassets */,
 				CA4F1BBF233A281600DDBECB /* LaunchScreen.storyboard */,
@@ -321,10 +324,11 @@
 			files = (
 				CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */,
 				CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */,
-				CA4F1BB6233A281500DDBECB /* ViewController.swift in Sources */,
+				CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */,
 				CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */,
 				CA4F1BBC233A281500DDBECB /* StockFilter.xcdatamodeld in Sources */,
 				CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */,
+				CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

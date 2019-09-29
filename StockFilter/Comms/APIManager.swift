@@ -28,8 +28,7 @@ class APIManager: NSObject {
     /// Dependency injected API caller
     public var apiCaller: APICaller
     
-    /// Swift errors are kind of annoying. Here's custom errors for our APIManager.. 
-    /// All this for just one error string.
+    /// Custom errors for our APIManager.. 
     enum APIManagerError: Error {
         case badEndpointError
         

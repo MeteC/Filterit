@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  NetworkImageSelectViewController.swift
 //  StockFilter
 //
 //  Created by Mete Cakman on 24/09/19.
@@ -13,7 +13,7 @@ import MBProgressHUD
 import moa
 
 
-class ViewController: UIViewController {
+class NetworkImageSelectViewController: UIViewController {
 
     // Interface Bindings
     
@@ -30,8 +30,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        // Hiding back button here establishes this view controller as the base in the navigation stack. So you don't go all the way back to the welcome screen once you start.
+        self.navigationItem.hidesBackButton = true
         setupRx()
     }
     
@@ -80,11 +81,17 @@ class ViewController: UIViewController {
     /// Ensure progress UI is displayed/hidden appropriately
     private func pullAPIData() -> Observable<[Image]> {
         
+        // this API request can be super quick - so quick that the HUD UI popping up looks almost like a glitch. I'll put in a minimum display time of 0.5 secs to avoid that 
+        let startTime = Date()
+        
         // Use driver trait to ensure main thread + no errors, use side-effects for HUD display
         return APIManager().listImages()
             .asDriver(onErrorJustReturn: [])
             .do(afterCompleted: { 
-                self.setHudVisible(false)
+                let deadline = DispatchTime.now() + max(0.5, Date().timeIntervalSince(startTime))
+                DispatchQueue.main.asyncAfter(deadline: deadline) { 
+                    self.setHudVisible(false)
+                }
             }, onSubscribed: { 
                 self.setHudVisible(true)
             })

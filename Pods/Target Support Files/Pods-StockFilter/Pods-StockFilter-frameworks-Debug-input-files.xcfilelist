@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-StockFilter/Pods-StockFilter-frameworks.sh
+${BUILT_PRODUCTS_DIR}/FCAlertView/FCAlertView.framework
 ${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework
 ${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
 ${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework

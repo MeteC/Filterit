@@ -1,19 +1,27 @@
 //
-//  WelcomeViewController.swift
+//  ApplyFilterViewController.swift
 //  StockFilter
 //
-//  Created by Mete Cakman on 29/09/19.
+//  Created by Mete Cakman on 30/09/2019.
 //  Copyright © 2019 Mete Cakman. All rights reserved.
 //
 
 import UIKit
+import RxSwift
 
-class WelcomeViewController: UIViewController {
+class ApplyFilterViewController: UIViewController {
 
+    let disposeBag = DisposeBag()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
     }
     

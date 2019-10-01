@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '13.0'
 
 target 'StockFilter' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -10,7 +10,7 @@ target 'StockFilter' do
   pod 'RxCocoa', '~> 5.0'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'moa', '~> 11.0'
-  
+  pod 'FCAlertView', :inhibit_warnings => true
 
   target 'StockFilterTests' do
     inherit! :search_paths

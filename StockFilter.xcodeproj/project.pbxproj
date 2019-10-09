@@ -20,6 +20,7 @@
 		CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BDE233A53B500DDBECB /* APIManager.swift */; };
 		CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BE0233A558B00DDBECB /* Image.swift */; };
 		CA4F1BE3233A589600DDBECB /* CommsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BE2233A589600DDBECB /* CommsTests.swift */; };
+		CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA59EB4B234CE11F00AA2721 /* Colors.xcassets */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCC55234381A1005434FB /* SaveDialog.swift */; };
 		CACDCC57234381A1005434FB /* SaveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCC55234381A1005434FB /* SaveDialog.swift */; };
@@ -57,6 +58,7 @@
 		CA4F1BDE233A53B500DDBECB /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		CA4F1BE0233A558B00DDBECB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CA4F1BE2233A589600DDBECB /* CommsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommsTests.swift; sourceTree = "<group>"; };
+		CA59EB4B234CE11F00AA2721 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CACDCC55234381A1005434FB /* SaveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDialog.swift; sourceTree = "<group>"; };
 		D01B1A165B3361DF7738BA8D /* Pods-StockFilter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockFilter.release.xcconfig"; path = "Target Support Files/Pods-StockFilter/Pods-StockFilter.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				CA4F1BDB233A539200DDBECB /* Comms */,
 				CA4F1BB7233A281500DDBECB /* Main.storyboard */,
 				CA4F1BBD233A281600DDBECB /* Assets.xcassets */,
+				CA59EB4B234CE11F00AA2721 /* Colors.xcassets */,
 				CA4F1BBF233A281600DDBECB /* LaunchScreen.storyboard */,
 				CA4F1BC2233A281600DDBECB /* Info.plist */,
 				CA4F1BBA233A281500DDBECB /* StockFilter.xcdatamodeld */,
@@ -254,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA4F1BC1233A281600DDBECB /* LaunchScreen.storyboard in Resources */,
+				CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */,
 				CA4F1BBE233A281600DDBECB /* Assets.xcassets in Resources */,
 				CA4F1BB9233A281500DDBECB /* Main.storyboard in Resources */,
 			);

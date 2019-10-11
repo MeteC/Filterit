@@ -13,6 +13,8 @@ import MBProgressHUD
 import moa
 
 
+/// View controller for pulling image data from our online API, presenting image options for selection,
+/// and later segueing off to e.g. apply filters
 class NetworkImageSelectViewController: UIViewController {
 
     // Interface Bindings
@@ -24,9 +26,10 @@ class NetworkImageSelectViewController: UIViewController {
     private var hudSpinner: MBProgressHUD?
     
     // Rx Gear
-    
     private let disposeBag = DisposeBag()
     
+    
+    // MARK: - Lifecycle & Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +43,10 @@ class NetworkImageSelectViewController: UIViewController {
     private func setupRx() {
         
         // on appear, we want to pull API data. However this would create an observable of Observable<[Photo]>, so then we flatMapLatest it.
-        let onAppear = self.rx.methodInvoked(#selector(viewDidAppear(_:))).flatMapLatest { _ in self.pullAPIData() }
+        let onAppear = self.rx
+            .methodInvoked(#selector(viewDidAppear(_:)))
+            .take(1) // "do once"
+            .flatMapLatest { _ in self.pullAPIData() }
         
         // on tap, we map out our API data observable
         let onTap = refreshButtonItem.rx.tap.flatMapLatest { self.pullAPIData() }
@@ -76,6 +82,15 @@ class NetworkImageSelectViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // not checking segue identifier, as our destination VC type is more interesting in this case 
+        if let vc = segue.destination as? ApplyFilterViewController {
+            vc.setInputImage(UIImage(named: "SamplePup")!) // experimental (`!` not good for production code). TODO: pass in the actual selection
+        }
+    }
+    
+    // MARK: - API Calls
     
     /// Call our APIManager to get the latest observable list of images.
     /// Ensure progress UI is displayed/hidden appropriately
@@ -99,7 +114,7 @@ class NetworkImageSelectViewController: UIViewController {
     }
 }
 
-
+// MARK: - ImageThumbCell
 class ImageThumbCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     

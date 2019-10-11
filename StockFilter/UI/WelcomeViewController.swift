@@ -21,17 +21,38 @@ class WelcomeViewController: UIViewController {
         
     }
     
+    
+    
+    
+    // MARK: - Development Rig
+    
     @IBAction func pressTestsButton(_ sender: Any) {
-        SaveDialog().showAlert(title: "Test Save Dialog", subtitle: nil)
-//            .debug()
-            .subscribe(
-                onSuccess: { (result) in
-                    print("\(#function) result \(result)")
-            }, 
-                onError: { (error) in
-                    print("\(#function) error \(error)")
-            })
-            .disposed(by: disposeBag)
+        
+        // keeping old tests around, rather than overwriting them..
+        let testType = 1
+        
+        switch testType {
+        case 0: // SaveDialog test pops up dialog and outputs response
+            SaveDialog().showAlert(title: "Test Save Dialog", subtitle: nil)
+            //            .debug()
+                        .subscribe(
+                            onSuccess: { (result) in
+                                print("\(#function) result \(result)")
+                        }, 
+                            onError: { (error) in
+                                print("\(#function) error \(error)")
+                        })
+                        .disposed(by: disposeBag)
+            
+        case 1: // ApplyFilterVC early tests
+            let vc = self.storyboard!.instantiateViewController(withIdentifier: "ApplyFilterViewController") as! ApplyFilterViewController
+            vc.setInputImage(UIImage(named: "SamplePup")!)
+            self.show(vc, sender: nil)
+            
+        default:
+            break
+        }
+        
     }
     
 

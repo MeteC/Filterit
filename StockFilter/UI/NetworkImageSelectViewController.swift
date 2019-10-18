@@ -17,6 +17,9 @@ import moa
 /// and later segueing off to e.g. apply filters
 class NetworkImageSelectViewController: UIViewController {
 
+    /// Will animate cells based on touch input
+    private static let kCellAnimationDuration = 0.15
+    
     // Interface Bindings
     
     @IBOutlet weak var thumbCollectionView: UICollectionView!
@@ -54,18 +57,52 @@ class NetworkImageSelectViewController: UIViewController {
         // We merge both of the above event sequences into one, so our dataSource is driven by viewDidAppear AND refresh button tap.
         let dataSource = Observable.merge([onAppear, onTap]) // note you merge two sequences of the same type
         
-        dataSource.bind(to: thumbCollectionView.rx.items(cellIdentifier: "ImageThumbCell", cellType: ImageThumbCell.self)) { (row, element, cell) in
-                        
-                        cell.imageView.moa.url = element.thumbUrl
-                        cell.layer.borderColor = UIColor.black.cgColor
-                        cell.layer.borderWidth = 1.0
-                    }
-                    .disposed(by: disposeBag)
+        dataSource.bind(to: thumbCollectionView.rx.items(cellIdentifier: "ImageThumbCell", cellType: ImageThumbCell.self)) 
+        { (row, element, cell) in
+            
+            cell.imageView.moa.url = element.thumbUrl
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 1.0
+        }
+        .disposed(by: disposeBag)
 
+        // highlighting the cell gives a little growth animation
+        thumbCollectionView.rx
+            .itemHighlighted
+            .compactMap { self.thumbCollectionView.cellForItem(at: $0) }
+            .subscribe(onNext: { (cell) in
+                UIView.animate(withDuration: NetworkImageSelectViewController.kCellAnimationDuration) { 
+                    cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        // todo: selecting a cell pops the thumbnail into a little transition dialog showing thumbnail and "Apply Filter" button centre-screen.
+        thumbCollectionView.rx
+            .itemSelected
+            .compactMap { self.thumbCollectionView.cellForItem(at: $0) }
+            .subscribe(onNext: { (cell) in
+                cell.layer.borderColor = UIColor.red.cgColor
+            })
+            .disposed(by: disposeBag)
+        
+        // ???: 2 separate subscriptions? or get image from within itemSelected..?
         thumbCollectionView.rx
             .modelSelected(Image.self)
             .subscribe(onNext: { (image) in 
                 print("Tapped photo \(image.title ?? "Untitled")")
+            })
+            .disposed(by: disposeBag)
+
+        
+        // revert highlight changes
+        thumbCollectionView.rx
+            .itemUnhighlighted
+            .compactMap { self.thumbCollectionView.cellForItem(at: $0) }
+            .subscribe(onNext: { (cell) in
+                UIView.animate(withDuration: NetworkImageSelectViewController.kCellAnimationDuration) { 
+                    cell.transform = .identity
+                }
             })
             .disposed(by: disposeBag)
     }

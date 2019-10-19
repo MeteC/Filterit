@@ -71,29 +71,45 @@ class NetworkImageSelectViewController: UIViewController {
             .itemHighlighted
             .compactMap { self.thumbCollectionView.cellForItem(at: $0) }
             .subscribe(onNext: { (cell) in
-                UIView.animate(withDuration: NetworkImageSelectViewController.kCellAnimationDuration) { 
-                    cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                UIView.animate(withDuration: NetworkImageSelectViewController.kCellAnimationDuration, 
+                               delay: 0.0, 
+                               options: .curveEaseOut, 
+                               animations: 
+                    { 
+                        cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                }, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        // Using a zip to combine model and item selected sequences
+        Observable.zip(thumbCollectionView.rx.itemSelected, thumbCollectionView.rx.modelSelected(Image.self))
+            .subscribe(onNext: { (index, image) in
+                guard let cell = self.thumbCollectionView.cellForItem(at: index) as? ImageThumbCell,
+                    let layout = self.thumbCollectionView.layoutAttributesForItem(at: index) else {
+                        assert(false, "itemSelected failed to provide cell/layout")
+                        return
+                }
+                
+                // Now got model, cell, and layout (without needing any static data sources)
+//                cell.layer.borderColor = UIColor.red.cgColor
+                print("Cell tapped at \(layout.frame)")
+                print("Tapped photo \(image.title ?? "Untitled")")
+                
+                // We can make the "hero" transition to our dialog using the cell layout frame info,
+                // plus knowledge of which image we're using
+                if let vc = self.storyboard?.instantiateViewController(identifier: "ImageApprovalViewController") as? ImageApprovalViewController {
+                    
+                    vc.image = image
+                    vc.imageThumb = cell.imageView.image 
+                    vc.heroTransitionStartFrame = self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview)
+                    vc.acceptButtonTitle = "jojo"
+                    self.present(vc, animated: false, completion: nil)
+                } else {
+                    print("Error instantiating ImageApprovalViewController from storyboard!")
                 }
             })
             .disposed(by: disposeBag)
-        
-        // todo: selecting a cell pops the thumbnail into a little transition dialog showing thumbnail and "Apply Filter" button centre-screen.
-        thumbCollectionView.rx
-            .itemSelected
-            .compactMap { self.thumbCollectionView.cellForItem(at: $0) }
-            .subscribe(onNext: { (cell) in
-                cell.layer.borderColor = UIColor.red.cgColor
-            })
-            .disposed(by: disposeBag)
-        
-        // ???: 2 separate subscriptions? or get image from within itemSelected..?
-        thumbCollectionView.rx
-            .modelSelected(Image.self)
-            .subscribe(onNext: { (image) in 
-                print("Tapped photo \(image.title ?? "Untitled")")
-            })
-            .disposed(by: disposeBag)
-
         
         // revert highlight changes
         thumbCollectionView.rx

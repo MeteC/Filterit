@@ -24,6 +24,7 @@
 		CA5193A0234F67A900403122 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA51939F234F67A900403122 /* FilterTests.swift */; };
 		CA5193A1234F683100403122 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA4F1BBD233A281600DDBECB /* Assets.xcassets */; };
 		CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA59EB4B234CE11F00AA2721 /* Colors.xcassets */; };
+		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCC55234381A1005434FB /* SaveDialog.swift */; };
 		F47C4F371F29799740F0BBE5 /* Pods_StockFilterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C63D69CDDA021FAB3E080E7 /* Pods_StockFilterTests.framework */; };
@@ -63,6 +64,7 @@
 		CA51939D234F4A9B00403122 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		CA51939F234F67A900403122 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		CA59EB4B234CE11F00AA2721 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CACDCC55234381A1005434FB /* SaveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDialog.swift; sourceTree = "<group>"; };
 		D01B1A165B3361DF7738BA8D /* Pods-StockFilter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockFilter.release.xcconfig"; path = "Target Support Files/Pods-StockFilter/Pods-StockFilter.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				CACDCC55234381A1005434FB /* SaveDialog.swift */,
 				CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */,
 				CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */,
+				CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */,
 				CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */,
 			);
 			path = UI;
@@ -356,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */,
 				CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */,
 				CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */,
 				CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */,

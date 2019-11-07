@@ -11,6 +11,10 @@ import UIKit
 /// A dialog style view controller that shows an image and allows us to accept or cancel it's being chosen for further processing. "Hero" transition built in (illusion to fly the image from another screen to it's full-size in this dialog)
 class ImageApprovalViewController: UIViewController {
 
+    // MARK: - Private and IB
+    
+    private var preparedForHeroTransition = false
+    
     @IBOutlet weak var darkBackgroundView: UIView!
     @IBOutlet weak var dialogHolderView: UIView!
     @IBOutlet weak var heroTransitionImageView: UIImageView!
@@ -41,7 +45,26 @@ class ImageApprovalViewController: UIViewController {
         }
     }
     
-    private var preparedForHeroTransition = false
+    /// Closure to run when accept button is pressed, gets provided the relevant image object
+    public var acceptBlock: ((Image) -> ())?
+    
+    /// Little convenience method for setting up the various required properties for a nice hero transition effect
+    /// - Parameter image: the image in question
+    /// - Parameter thumbnail: preloaded thumb image
+    /// - Parameter startFrame: starting frame for the hero transition
+    /// - Parameter acceptButtonTitle: optional title to rename the accept button
+    /// - Parameter acceptBlock: required closure that runs when accept button is tapped
+    public func preConfigureForHeroTransition(with image: Image, 
+                                              thumbnail: UIImage?, 
+                                              startFrame: CGRect, 
+                                              acceptButtonTitle: String?, 
+                                              acceptBlock: @escaping ((Image) -> ())) {
+        self.image = image
+        self.imageThumb = thumbnail
+        self.heroTransitionStartFrame = startFrame
+        if let newTitle = acceptButtonTitle { self.acceptButtonTitle = newTitle }
+        self.acceptBlock = acceptBlock
+    }
     
     // MARK:- View Lifecycle
     
@@ -63,7 +86,7 @@ class ImageApprovalViewController: UIViewController {
         // this will switch our image appearance from thumbnail quality to final image quality once it's downloaded
         fullResImageView.moa.url = image?.url 
         fullResImageView.moa.onSuccess = { image in
-            print("Fading in full res image!")
+            NSLog("Fading in full res image!")
             UIView.animate(withDuration: 0.4, delay: 1.0, animations: { 
                 self.thumbImageView.alpha = 0
             }, completion: nil)
@@ -89,7 +112,13 @@ class ImageApprovalViewController: UIViewController {
     }
     
     @IBAction func pressAccept(_ sender: Any) {
-        // todo
+        self.dismiss(animated: false, completion: nil)
+        
+        if let image = self.image {
+            self.acceptBlock?(image)
+        } else {
+            NSLog("Warning - pressed accept for nil image")
+        }
     }
     
     

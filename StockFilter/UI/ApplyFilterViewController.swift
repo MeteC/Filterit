@@ -37,6 +37,10 @@ class ApplyFilterViewController: UIViewController {
         resultImageView.image = inputImage
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -55,7 +59,7 @@ class ApplyFilterViewController: UIViewController {
         let allFilters = FilterType.allCases 
         let filterType = allFilters[ filterTestingCounter % allFilters.count ]
 
-        print("Testing - applying filter \(filterType) to inputImage")
+        NSLog("Testing - applying filter \(filterType) to inputImage")
         resultImageView.image = filterType.apply(to: inputImage!)
     }
 }

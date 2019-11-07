@@ -174,10 +174,10 @@
 		CACDCC5823439547005434FB /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				CACDCC55234381A1005434FB /* SaveDialog.swift */,
 				CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */,
-				CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */,
 				CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */,
+				CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */,
+				CACDCC55234381A1005434FB /* SaveDialog.swift */,
 				CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */,
 			);
 			path = UI;

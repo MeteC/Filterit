@@ -28,12 +28,12 @@ enum FilterType: CaseIterable {
             }
             
             guard let inputCgImage = image.cgImage else {
-                print("FilterType \(self) - Filter input failure - couldn't get CGImage of input image")
+                NSLog("FilterType \(self) - Filter input failure - couldn't get CGImage of input image")
                 return nil
             }
             
             guard let filter = self.filter else {
-                print("FilterType \(self) - Filter setup failure - couldn't create CIFilter")
+                NSLog("FilterType \(self) - Filter setup failure - couldn't create CIFilter")
                 return nil
             }
             
@@ -41,7 +41,7 @@ enum FilterType: CaseIterable {
             filter.setValue(CIImage(cgImage: inputCgImage), forKey: kCIInputImageKey)
             
             guard let outputCiImage = filter.outputImage else {
-                print("FilterType \(self) - Filter output failed and returned nil")
+                NSLog("FilterType \(self) - Filter output failed and returned nil")
                 return nil
             }
             

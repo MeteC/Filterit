@@ -28,6 +28,9 @@ class NetworkImageSelectViewController: UIViewController {
     /// An overhead progress display used while pulling data from the API
     private var hudSpinner: MBProgressHUD?
     
+    /// A strong reference to our image caching tools
+    private let moa = Moa()
+    
     // Rx Gear
     private let disposeBag = DisposeBag()
     
@@ -91,22 +94,34 @@ class NetworkImageSelectViewController: UIViewController {
                         return
                 }
                 
-                // Now got model, cell, and layout (without needing any static data sources)
-//                cell.layer.borderColor = UIColor.red.cgColor
-                print("Cell tapped at \(layout.frame)")
-                print("Tapped photo \(image.title ?? "Untitled")")
+                // Now we got model, cell, and layout (without needing any static data sources)
+                NSLog("Tapped photo \(image.title ?? "Untitled")")
                 
-                // We can make the "hero" transition to our dialog using the cell layout frame info,
-                // plus knowledge of which image we're using
+                // Pass in all required data for our ImageApprovalViewController to use its "hero" transition effect
                 if let vc = self.storyboard?.instantiateViewController(identifier: "ImageApprovalViewController") as? ImageApprovalViewController {
                     
-                    vc.image = image
-                    vc.imageThumb = cell.imageView.image 
-                    vc.heroTransitionStartFrame = self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview)
-                    vc.acceptButtonTitle = NSLocalizedString("Apply Filter", comment: "")
+                    vc.preConfigureForHeroTransition(with: image, 
+                                                     thumbnail: cell.imageView.image, 
+                                                     startFrame: self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview), 
+                                                     acceptButtonTitle: NSLocalizedString("Apply Filter", comment: "")) 
+                    { [weak self] image in
+                        
+                        // Accept block, using image as sender
+                        // Let's download the image first if moa doesn't already have it cached..
+                        
+                        self?.setHudVisible(true)
+                        self?.moa.onSuccess = { [weak self] fullResImage in
+                            self?.setHudVisible(false)
+                            NSLog("Moa provided full-res image from \(image.url)")
+                            self?.performSegue(withIdentifier: "applyFilter", sender: fullResImage)
+                            return fullResImage
+                        }
+                        self?.moa.url = image.url
+                    }
+                    
                     self.present(vc, animated: false, completion: nil)
                 } else {
-                    print("Error instantiating ImageApprovalViewController from storyboard!")
+                    NSLog("Error instantiating ImageApprovalViewController from storyboard!")
                 }
             })
             .disposed(by: disposeBag)
@@ -137,9 +152,18 @@ class NetworkImageSelectViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // not checking segue identifier, as our destination VC type is more interesting in this case 
+        // Not checking segue identifier, as our destination VC type is more interesting in this case
+        // Note we can pass the UIImage we'll be filtering through the segue as the sender, and thus prevent
+        // keeping any references to the selected image here in our class
+        
         if let vc = segue.destination as? ApplyFilterViewController {
-            vc.setInputImage(UIImage(named: "SamplePup")!) // experimental (`!` not good for production code). TODO: pass in the actual selection
+            if let image = sender as? UIImage {
+                vc.setInputImage(image)
+            } else {
+                // Show something... But we actually want to push the right UIImage through as the sender here
+                vc.setInputImage(UIImage(named: "SamplePup")!) 
+                NSLog("Error - called applyFilter segue without passing the image as sender. Showing default image.")
+            }
         }
     }
     

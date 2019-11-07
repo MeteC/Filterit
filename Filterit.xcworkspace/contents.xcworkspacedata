@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/mcakman/Documents/Projects/Mete/StockFilter/Filterit.xcodeproj">
+      location = "group:Filterit.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Filterit.xcodeproj">
    </FileRef>
 </Workspace>

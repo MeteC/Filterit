@@ -1,6 +1,0 @@
-framework module Pods_StockFilterTests {
-  umbrella header "Pods-StockFilterTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

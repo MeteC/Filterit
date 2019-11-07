@@ -140,27 +140,32 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akN-NQ-z69">
                                                 <rect key="frame" x="8" y="8" width="311" height="311"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="CRo-0e-iVk">
-                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JxA-5S-tQl">
                                                         <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="Thumb_ImageView"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="JxA-5S-tQl" secondAttribute="height" multiplier="1:1" id="gDO-xH-HEy"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CRo-0e-iVk">
+                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="Full_Res_ImageView"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="CRo-0e-iVk" secondAttribute="height" multiplier="1:1" id="7Ia-vj-UqY"/>
+                                                        </constraints>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Image_Holder_View"/>
                                                 <constraints>
                                                     <constraint firstItem="JxA-5S-tQl" firstAttribute="trailing" secondItem="akN-NQ-z69" secondAttribute="trailing" id="AhP-ok-TNk"/>
-                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="height" secondItem="JxA-5S-tQl" secondAttribute="height" id="CxJ-G0-TCC"/>
                                                     <constraint firstItem="JxA-5S-tQl" firstAttribute="leading" secondItem="akN-NQ-z69" secondAttribute="leading" id="E0z-pe-Xia"/>
                                                     <constraint firstItem="JxA-5S-tQl" firstAttribute="top" secondItem="akN-NQ-z69" secondAttribute="top" id="HVa-fh-SgS"/>
-                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="centerY" secondItem="JxA-5S-tQl" secondAttribute="centerY" id="gMo-63-yhM"/>
+                                                    <constraint firstAttribute="trailing" secondItem="CRo-0e-iVk" secondAttribute="trailing" id="J0V-3Y-hel"/>
+                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="leading" secondItem="akN-NQ-z69" secondAttribute="leading" id="UKR-jY-ChN"/>
+                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="top" secondItem="akN-NQ-z69" secondAttribute="top" id="dOc-P7-vl0"/>
                                                     <constraint firstAttribute="bottom" secondItem="JxA-5S-tQl" secondAttribute="bottom" id="hcl-5S-0LB"/>
-                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="centerX" secondItem="JxA-5S-tQl" secondAttribute="centerX" id="oQT-YH-Xzg"/>
-                                                    <constraint firstItem="CRo-0e-iVk" firstAttribute="width" secondItem="JxA-5S-tQl" secondAttribute="width" id="x11-iI-lxK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="CRo-0e-iVk" secondAttribute="bottom" id="r1K-lW-XPK"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xag-J4-L18">
@@ -173,6 +178,7 @@
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Dialog_Holder_View"/>
                                         <constraints>
                                             <constraint firstItem="yke-tt-gWl" firstAttribute="top" secondItem="akN-NQ-z69" secondAttribute="bottom" constant="16" id="3Q6-1q-Fc7"/>
                                             <constraint firstItem="akN-NQ-z69" firstAttribute="top" secondItem="jxe-ip-9Ta" secondAttribute="top" constant="8" id="Qg6-A8-Gv1"/>
@@ -191,6 +197,7 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.49838289650000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Dark_Background_View"/>
                                 <constraints>
                                     <constraint firstItem="jxe-ip-9Ta" firstAttribute="centerX" secondItem="KeV-Qq-8fu" secondAttribute="centerX" id="8xv-1b-JPJ"/>
                                     <constraint firstItem="jxe-ip-9Ta" firstAttribute="leading" secondItem="KeV-Qq-8fu" secondAttribute="leading" constant="24" id="Ifj-HO-c3x"/>
@@ -200,6 +207,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eI6-Vv-Plc">
                                 <rect key="frame" x="12" y="14" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Hero Transition Image View"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -223,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fS-18-Rup" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3156" y="394.45277361319341"/>
+            <point key="canvasLocation" x="3155.072463768116" y="393.75000000000006"/>
         </scene>
         <!--Apply Filter-->
         <scene sceneID="Kvn-4W-hn7">

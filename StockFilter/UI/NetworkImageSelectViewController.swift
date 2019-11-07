@@ -103,7 +103,7 @@ class NetworkImageSelectViewController: UIViewController {
                     vc.image = image
                     vc.imageThumb = cell.imageView.image 
                     vc.heroTransitionStartFrame = self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview)
-                    vc.acceptButtonTitle = "jojo"
+                    vc.acceptButtonTitle = "Apply Filter"
                     self.present(vc, animated: false, completion: nil)
                 } else {
                     print("Error instantiating ImageApprovalViewController from storyboard!")

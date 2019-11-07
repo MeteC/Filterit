@@ -24,6 +24,7 @@
 		CA5193A0234F67A900403122 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA51939F234F67A900403122 /* FilterTests.swift */; };
 		CA5193A1234F683100403122 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA4F1BBD233A281600DDBECB /* Assets.xcassets */; };
 		CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA59EB4B234CE11F00AA2721 /* Colors.xcassets */; };
+		CA920C3423741FF20086484D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA920C3223741FF20086484D /* Localizable.strings */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCC55234381A1005434FB /* SaveDialog.swift */; };
@@ -64,6 +65,7 @@
 		CA51939D234F4A9B00403122 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		CA51939F234F67A900403122 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		CA59EB4B234CE11F00AA2721 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		CA920C3323741FF20086484D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CACDCC55234381A1005434FB /* SaveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDialog.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				CA4F1BBF233A281600DDBECB /* LaunchScreen.storyboard */,
 				CA4F1BC2233A281600DDBECB /* Info.plist */,
 				CA4F1BBA233A281500DDBECB /* StockFilter.xcdatamodeld */,
+				CA920C3223741FF20086484D /* Localizable.strings */,
 			);
 			path = StockFilter;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA920C3423741FF20086484D /* Localizable.strings in Resources */,
 				CA4F1BC1233A281600DDBECB /* LaunchScreen.storyboard in Resources */,
 				CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */,
 				CA4F1BBE233A281600DDBECB /* Assets.xcassets in Resources */,
@@ -408,6 +412,14 @@
 				CA4F1BC0233A281600DDBECB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CA920C3223741FF20086484D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA920C3323741FF20086484D /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

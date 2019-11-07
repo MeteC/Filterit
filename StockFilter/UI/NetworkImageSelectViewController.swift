@@ -103,7 +103,7 @@ class NetworkImageSelectViewController: UIViewController {
                     vc.image = image
                     vc.imageThumb = cell.imageView.image 
                     vc.heroTransitionStartFrame = self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview)
-                    vc.acceptButtonTitle = "Apply Filter"
+                    vc.acceptButtonTitle = NSLocalizedString("Apply Filter", comment: "")
                     self.present(vc, animated: false, completion: nil)
                 } else {
                     print("Error instantiating ImageApprovalViewController from storyboard!")
@@ -127,7 +127,7 @@ class NetworkImageSelectViewController: UIViewController {
     private func setHudVisible(_ visible: Bool) {
         if visible {
             hudSpinner = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hudSpinner!.label.text = "Checking Server"
+            hudSpinner!.label.text = NSLocalizedString("Checking Server", comment: "")
             hudSpinner!.backgroundColor = UIColor(white: 0, alpha: 0.5) // dark
         } else {
             hudSpinner?.hide(animated: true)

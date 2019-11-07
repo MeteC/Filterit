@@ -84,7 +84,7 @@ class SaveDialog: NSObject {
             
             alert.showAlert(withTitle: title, withSubtitle: subtitle, withCustomImage: nil, withDoneButtonTitle: "Save", andButtons: [])
             
-            alert.addButton("Cancel") {
+            alert.addButton(NSLocalizedString("Cancel", comment: "")) {
                 observer.onNext(.finish(isCancelled: true))
             }
             
@@ -92,7 +92,7 @@ class SaveDialog: NSObject {
                 observer.onNext(.finish(isCancelled: false))
             }
             
-            alert.addTextField(withPlaceholder: "Add a caption") { (caption) in
+            alert.addTextField(withPlaceholder: NSLocalizedString("Add a caption", comment: "")) { (caption) in
                 observer.onNext(.textField(text: caption ?? ""))
             }
             

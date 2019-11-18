@@ -45,7 +45,7 @@ class NetworkImageSelectViewController: UIViewController {
         setupRx()
     }
     
-    /// Setup all Rx bindings for this controller
+    /// Set up all Rx bindings for this controller
     private func setupRx() {
         
         // on appear, we want to pull API data. However this would create an observable of Observable<[Photo]>, so then we flatMapLatest it.

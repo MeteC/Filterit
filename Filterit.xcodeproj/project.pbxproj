@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -131,12 +131,12 @@
 				CACDCC5823439547005434FB /* UI */,
 				CA4F1BDB233A539200DDBECB /* Comms */,
 				CA4F1BB7233A281500DDBECB /* Main.storyboard */,
+				CA920C3223741FF20086484D /* Localizable.strings */,
 				CA4F1BBD233A281600DDBECB /* Assets.xcassets */,
 				CA59EB4B234CE11F00AA2721 /* Colors.xcassets */,
 				CA4F1BBF233A281600DDBECB /* LaunchScreen.storyboard */,
 				CA4F1BC2233A281600DDBECB /* Info.plist */,
 				CA4F1BBA233A281500DDBECB /* Filterit.xcdatamodeld */,
-				CA920C3223741FF20086484D /* Localizable.strings */,
 			);
 			path = Filterit;
 			sourceTree = "<group>";

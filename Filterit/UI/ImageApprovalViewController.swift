@@ -48,22 +48,22 @@ class ImageApprovalViewController: UIViewController {
     /// Closure to run when accept button is pressed, gets provided the relevant image object
     public var acceptBlock: ((Image) -> ())?
     
+    /// Closure to run when cancel button is pressed
+    public var cancelBlock: (() -> ())?
+    
     /// Little convenience method for setting up the various required properties for a nice hero transition effect
     /// - Parameter image: the image in question
     /// - Parameter thumbnail: preloaded thumb image
     /// - Parameter startFrame: starting frame for the hero transition
     /// - Parameter acceptButtonTitle: optional title to rename the accept button
-    /// - Parameter acceptBlock: required closure that runs when accept button is tapped
     public func preConfigureForHeroTransition(with image: Image, 
                                               thumbnail: UIImage?, 
                                               startFrame: CGRect, 
-                                              acceptButtonTitle: String?, 
-                                              acceptBlock: @escaping ((Image) -> ())) {
+                                              acceptButtonTitle: String?) {
         self.image = image
         self.imageThumb = thumbnail
         self.heroTransitionStartFrame = startFrame
         if let newTitle = acceptButtonTitle { self.acceptButtonTitle = newTitle }
-        self.acceptBlock = acceptBlock
     }
     
     // MARK:- View Lifecycle
@@ -108,12 +108,10 @@ class ImageApprovalViewController: UIViewController {
     }
     
     @IBAction func pressCancel(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.cancelBlock?()
     }
     
     @IBAction func pressAccept(_ sender: Any) {
-        self.dismiss(animated: false, completion: nil)
-        
         if let image = self.image {
             self.acceptBlock?(image)
         } else {

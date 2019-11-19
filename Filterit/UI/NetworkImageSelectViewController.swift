@@ -100,18 +100,23 @@ class NetworkImageSelectViewController: UIViewController {
                 // Pass in all required data for our ImageApprovalViewController to use its "hero" transition effect
                 if let vc = self.storyboard?.instantiateViewController(identifier: "ImageApprovalViewController") as? ImageApprovalViewController {
                     
+                    // dialog setup
                     vc.preConfigureForHeroTransition(with: image, 
                                                      thumbnail: cell.imageView.image, 
                                                      startFrame: self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview), 
                                                      acceptButtonTitle: NSLocalizedString("Apply Filter", comment: "")) 
-                    { [weak self] image in
+                    
+                    vc.acceptBlock = { [weak self] image in
                         
                         // Accept block, using image as sender
                         // Let's download the image first if moa doesn't already have it cached..
                         
                         self?.setHudVisible(true)
                         self?.moa.onSuccess = { [weak self] fullResImage in
+                            
                             self?.setHudVisible(false)
+                            vc.view.removeFromSuperview()
+                            
                             NSLog("Moa provided full-res image from \(image.url)")
                             self?.performSegue(withIdentifier: "applyFilter", sender: fullResImage)
                             return fullResImage
@@ -119,7 +124,13 @@ class NetworkImageSelectViewController: UIViewController {
                         self?.moa.url = image.url
                     }
                     
-                    self.present(vc, animated: false, completion: nil)
+                    vc.cancelBlock = {
+                        vc.view.removeFromSuperview()
+                    }
+                    
+                    // show the dialog, since we have a tab bar we'll need to include it as a child view rather than present it modeally,
+                    // since iOS can lose the lower graphic context by switching tabs (and you end up with blackness below)
+                    self.view.addSubview(vc.view)
                 } else {
                     NSLog("Error instantiating ImageApprovalViewController from storyboard!")
                 }

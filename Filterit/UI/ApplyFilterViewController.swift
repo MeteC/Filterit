@@ -73,7 +73,8 @@ class ApplyFilterViewController: UIViewController {
         // tap handling - apply the filter, let's also indicate which filter is currently applied
         filterCollectionView.rx.modelSelected(FilterType.self)
             .subscribe(onNext: { filterType in
-                self.resultImageView.image = filterType.apply(to: self.inputImage!)
+                let img = filterType.apply(to: self.inputImage!)
+                self.resultImageView.image = img
             })
             .disposed(by: disposeBag)
     }
@@ -91,37 +92,5 @@ class FilterCell: UICollectionViewCell {
             self.layer.borderColor = (UIColor(named: "Accent") ?? UIColor.systemYellow).cgColor
             self.layer.borderWidth = self.isSelected ? 1.0 : 0.0
         }
-    }
-}
-
-// MARK: - FilterType ViewModel
-
-/// View-model layer, provides UI content for our FilterCells for all FilterType filters
-struct FilterTypeViewModel {
-    
-    let filter: FilterType
-    
-    /// Presentation title for our filter
-    func presentationTitle() -> String {
-        switch filter {
-        
-        case .none:
-            return NSLocalizedString("No Filter", comment: "")
-        case .sepia:
-            return NSLocalizedString("Sepia", comment: "")
-        case .colourInvert:
-            return NSLocalizedString("Invert Colours", comment: "")
-        case .vignette:
-            return NSLocalizedString("Vignette", comment: "")
-        
-        }
-    }
-    
-    /// Presentation sample image for our filter
-    func presentationImage() -> UIImage? {
-        if let sample = UIImage(named: "SamplePupIcon") {
-            return filter.apply(to: sample)
-        }
-        return nil
     }
 }

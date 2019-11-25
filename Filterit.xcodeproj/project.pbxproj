@@ -27,6 +27,10 @@
 		CA920C3423741FF20086484D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA920C3223741FF20086484D /* Localizable.strings */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
+		CAC6C2B3238C310D0039711C /* FilterTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */; };
+		CAC6C2B4238C310D0039711C /* FilterTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */; };
+		CAC6C2B6238C76A70039711C /* FilterGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6C2B5238C76A70039711C /* FilterGraph.swift */; };
+		CAC6C2B7238C76A70039711C /* FilterGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6C2B5238C76A70039711C /* FilterGraph.swift */; };
 		CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACDCC55234381A1005434FB /* SaveDialog.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +70,8 @@
 		CA920C3323741FF20086484D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTypeViewModel.swift; sourceTree = "<group>"; };
+		CAC6C2B5238C76A70039711C /* FilterGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGraph.swift; sourceTree = "<group>"; };
 		CACDCC55234381A1005434FB /* SaveDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDialog.swift; sourceTree = "<group>"; };
 		CE3C0DAD85F40B827F176898 /* Pods-Filterit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filterit.release.xcconfig"; path = "Target Support Files/Pods-Filterit/Pods-Filterit.release.xcconfig"; sourceTree = "<group>"; };
 		FD45B0BE09596652E5909618 /* Pods_Filterit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filterit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				CA51939D234F4A9B00403122 /* FilterType.swift */,
+				CAC6C2B5238C76A70039711C /* FilterGraph.swift */,
+				CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -378,11 +386,13 @@
 				CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */,
 				CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */,
 				CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */,
+				CAC6C2B6238C76A70039711C /* FilterGraph.swift in Sources */,
 				CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */,
 				CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */,
 				CA51939E234F4A9B00403122 /* FilterType.swift in Sources */,
 				CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */,
 				CA4F1BBC233A281500DDBECB /* Filterit.xcdatamodeld in Sources */,
+				CAC6C2B3238C310D0039711C /* FilterTypeViewModel.swift in Sources */,
 				CA466EBB23425065009C8BB7 /* ApplyFilterViewController.swift in Sources */,
 				CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */,
 				CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */,
@@ -393,8 +403,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC6C2B7238C76A70039711C /* FilterGraph.swift in Sources */,
 				CA5193A0234F67A900403122 /* FilterTests.swift in Sources */,
 				CA4F1BE3233A589600DDBECB /* CommsTests.swift in Sources */,
+				CAC6C2B4238C310D0039711C /* FilterTypeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

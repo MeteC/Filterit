@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		02FF8C409428BA92CD42BC3B /* Pods_Filterit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD45B0BE09596652E5909618 /* Pods_Filterit.framework */; };
 		85D9F4F9FCB6C99EDDCD0BE4 /* Pods_FilteritTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A560D2B91A606971778D494 /* Pods_FilteritTests.framework */; };
+		CA31D4EC2398B0B400232291 /* ArtworkWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31D4EB2398B0B400232291 /* ArtworkWrapper.swift */; };
+		CA31D4EE239A5C5B00232291 /* ArtworkWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31D4ED239A5C5B00232291 /* ArtworkWrapperTests.swift */; };
+		CA31D4EF239A621900232291 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA51939D234F4A9B00403122 /* FilterType.swift */; };
+		CA31D4F0239A621D00232291 /* ArtworkWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31D4EB2398B0B400232291 /* ArtworkWrapper.swift */; };
+		CA31D4F1239A62EB00232291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB1233A281500DDBECB /* AppDelegate.swift */; };
+		CA31D4F2239A663900232291 /* Filterit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BBA233A281500DDBECB /* Filterit.xcdatamodeld */; };
 		CA466EBB23425065009C8BB7 /* ApplyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */; };
 		CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB1233A281500DDBECB /* AppDelegate.swift */; };
 		CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */; };
@@ -49,6 +55,8 @@
 		812D9D19F91F74D7FCA635DC /* Pods-FilteritTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilteritTests.release.xcconfig"; path = "Target Support Files/Pods-FilteritTests/Pods-FilteritTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A560D2B91A606971778D494 /* Pods_FilteritTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FilteritTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7645A5BD639CEED2EAE796B /* Pods-Filterit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filterit.debug.xcconfig"; path = "Target Support Files/Pods-Filterit/Pods-Filterit.debug.xcconfig"; sourceTree = "<group>"; };
+		CA31D4EB2398B0B400232291 /* ArtworkWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkWrapper.swift; sourceTree = "<group>"; };
+		CA31D4ED239A5C5B00232291 /* ArtworkWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkWrapperTests.swift; sourceTree = "<group>"; };
 		CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyFilterViewController.swift; sourceTree = "<group>"; };
 		CA4F1BAE233A281500DDBECB /* Filterit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filterit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA4F1BB1233A281500DDBECB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +116,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CA31D4EA2398B09600232291 /* CoreDataWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				CA31D4EB2398B0B400232291 /* ArtworkWrapper.swift */,
+			);
+			path = CoreDataWrappers;
+			sourceTree = "<group>";
+		};
 		CA4F1BA5233A281400DDBECB = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +149,7 @@
 			children = (
 				CA4F1BB1233A281500DDBECB /* AppDelegate.swift */,
 				CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */,
+				CA31D4EA2398B09600232291 /* CoreDataWrappers */,
 				CA51939C234F4A8600403122 /* Filter */,
 				CACDCC5823439547005434FB /* UI */,
 				CA4F1BDB233A539200DDBECB /* Comms */,
@@ -150,8 +167,9 @@
 		CA4F1BCA233A281700DDBECB /* FilteritTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA51939F234F67A900403122 /* FilterTests.swift */,
+				CA31D4ED239A5C5B00232291 /* ArtworkWrapperTests.swift */,
 				CA4F1BE2233A589600DDBECB /* CommsTests.swift */,
+				CA51939F234F67A900403122 /* FilterTests.swift */,
 				CA4F1BCD233A281700DDBECB /* Info.plist */,
 			);
 			path = FilteritTests;
@@ -391,6 +409,7 @@
 				CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */,
 				CA51939E234F4A9B00403122 /* FilterType.swift in Sources */,
 				CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */,
+				CA31D4EC2398B0B400232291 /* ArtworkWrapper.swift in Sources */,
 				CA4F1BBC233A281500DDBECB /* Filterit.xcdatamodeld in Sources */,
 				CAC6C2B3238C310D0039711C /* FilterTypeViewModel.swift in Sources */,
 				CA466EBB23425065009C8BB7 /* ApplyFilterViewController.swift in Sources */,
@@ -403,10 +422,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA31D4F1239A62EB00232291 /* AppDelegate.swift in Sources */,
+				CA31D4F2239A663900232291 /* Filterit.xcdatamodeld in Sources */,
 				CAC6C2B7238C76A70039711C /* FilterGraph.swift in Sources */,
+				CA31D4F0239A621D00232291 /* ArtworkWrapper.swift in Sources */,
 				CA5193A0234F67A900403122 /* FilterTests.swift in Sources */,
 				CA4F1BE3233A589600DDBECB /* CommsTests.swift in Sources */,
+				CA31D4EE239A5C5B00232291 /* ArtworkWrapperTests.swift in Sources */,
 				CAC6C2B4238C310D0039711C /* FilterTypeViewModel.swift in Sources */,
+				CA31D4EF239A621900232291 /* FilterType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

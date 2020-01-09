@@ -8,17 +8,20 @@
 
 import UIKit
 import RxSwift
+import FCAlertView
 
 /// View controller for applying filters to an input image, and then passing the result on
 class ApplyFilterViewController: UIViewController {
 
     @IBOutlet weak var filterCollectionView: UICollectionView!
     @IBOutlet weak var resultImageView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     
     /// Set this before launching the VC, holds the input photo / image
     private var inputImage: UIImage? = nil
     
-    let disposeBag = DisposeBag()
+    private let saveDialog = SaveDialog()
+    private let disposeBag = DisposeBag()
     
     
     /// Set the input image before launching the VC, or you'll be told..
@@ -77,8 +80,58 @@ class ApplyFilterViewController: UIViewController {
                 self.resultImageView.image = img
             })
             .disposed(by: disposeBag)
+        
+        // Since SaveDialog is reactive, why not set up our "Save" button fully reactively here
+        self.saveButton.rx.tap
+            .flatMap { 
+                self.saveDialog.showAlert(title: NSLocalizedString("Save Image", comment: ""), subtitle: nil) 
+            }
+            .asDriver(onErrorJustReturn: .cancel)
+            .drive(onNext: { (result) in
+                switch result {
+                case .cancel:
+                    NSLog("Cancelled save.")
+                    
+                case .save(let captionText, let rating):
+                    guard let finalImage = self.resultImageView.image else {
+                        NSLog("ERROR: Tried to save but couldn't access image - found nil on resultImageView!")
+                        self.showAlertMessage(NSLocalizedString("Failed to save image!", comment: ""), asError: true)
+                        break
+                    }
+                    
+                    NSLog("Saving image with caption \(captionText) and rating \(rating)")
+                    
+                    let artwork = ArtworkWrapper(caption: captionText, image: finalImage, created: Date(), rating: Int16(rating))
+                    
+                    do {
+                        try artwork.save()
+                        self.showAlertMessage(NSLocalizedString("Successfully saved image!", comment: ""), asError: false)
+                        
+                    } catch {
+                        NSLog("Failed to save artwork: \(error)")
+                        self.showAlertMessage(NSLocalizedString("Failed to save image!", comment: ""), asError: true)
+                    }
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
     
+    /// Present a message to the user, as either an error or a success type alert
+    /// - Parameters:
+    ///   - message: The message to present
+    ///   - asError: Set true for error alert layouts, or false for success type
+    private func showAlertMessage(_ message: String, asError: Bool) {
+        let alert = FCAlertView()
+        
+        if asError { 
+            alert.makeAlertTypeWarning()
+        } else {
+            alert.makeAlertTypeSuccess()
+        }
+        
+        let title = asError ? NSLocalizedString("Error", comment: "") : NSLocalizedString("Success", comment: "")
+        alert.showAlert(withTitle: title, withSubtitle: message, withCustomImage: nil, withDoneButtonTitle: NSLocalizedString("OK", comment: ""), andButtons: [])
+    }
 }
 
 // MARK: - ImageThumbCell

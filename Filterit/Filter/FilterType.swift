@@ -80,7 +80,6 @@ enum FilterType: CaseIterable {
                              y: sideCropPercent * imageSize.height, 
                              z: imageSize.width - 2 * (sideCropPercent * imageSize.width), 
                              w: imageSize.height - 2 * (sideCropPercent * imageSize.height))
-                NSLog("d: \(cropVector)")
                 
                 filter.setValue(blurValue, forKey: kCIInputAmountKey)
                 

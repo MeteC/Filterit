@@ -12,11 +12,21 @@
 "Cancel" = "Cancel";
 "Checking Server" = "Checking Server";
 
+"Error" = "Error";
+
+"Failed to save image!" = "Failed to save image!";
+
 "Invert Colours" = "Invert";
 
 "No Filter" = "No Filter";
 
+"OK" = "OK";
+
+"Save" = "Save";
+"Save Image" = "Save Image";
 "Sepia" = "Sepia";
+"Success" = "Success";
+"Successfully saved image!" = "Successfully saved image!";
 
 "Vignette" = "Vignette";
 

@@ -14,12 +14,11 @@ import FCAlertView
 /// Dialog for saving a user's creation, allowing them to add a rating out of 5 and a caption
 class SaveDialog: NSObject {
     
-    
-    // For the save dialog I'll use FCAlertDialog, because it comes with prepackaged features like ratings stars and text fields,
-    // and a nice graphical layout. However, the callbacks for the text fields, ratings results, and save/cancel buttons aren't returned
-    // in a single object (delegate or callback), and they aren't returned in the order you might expect (i.e. text, ratings, save/cancel).
-    // They are returned in an expected order however, and there are many ways to cluster up the data, but why not  use RxSwift a little 
-    // creatively here to buffer the 3 signals out of the dialog and return the results as an observable.
+    /*
+     For the save dialog I'll use FCAlertDialog, because it comes with prepackaged features like ratings stars and text fields, and a nice graphical layout. However, the callbacks for the text fields, ratings results, and save/cancel buttons aren't returned in a single object (delegate or callback), and they aren't returned in the order you might expect (i.e. text, ratings, save/cancel).
+     
+     They are returned in an expected order however, and there are many ways to cluster up the data, but why not  use RxSwift a little creatively here to buffer the 3 signals out of the dialog and return the results as an observable.
+    */
     
     /// Define our possible dialog results
     enum Result {
@@ -81,8 +80,9 @@ class SaveDialog: NSObject {
             alert.makeAlertTypeRateStars { (rating) in
                 observer.onNext(.rating(count: rating))
             }
+            alert.colorScheme = UIColor.init(named: "Accent")
             
-            alert.showAlert(withTitle: title, withSubtitle: subtitle, withCustomImage: nil, withDoneButtonTitle: "Save", andButtons: [])
+            alert.showAlert(withTitle: title, withSubtitle: subtitle, withCustomImage: nil, withDoneButtonTitle: NSLocalizedString("Save", comment: ""), andButtons: [])
             
             alert.addButton(NSLocalizedString("Cancel", comment: "")) {
                 observer.onNext(.finish(isCancelled: true))

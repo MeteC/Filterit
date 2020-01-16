@@ -8,6 +8,7 @@
 
 import XCTest
 import CoreData
+import RxSwift
 @testable import Filterit
 
 class ArtworkWrapperTests: XCTestCase {
@@ -30,6 +31,7 @@ class ArtworkWrapperTests: XCTestCase {
         }
     }
 
+    /// Test artwork creation and fetch methods
     func testArtworkCreation() {
         // Create 2 new artwork objects, save them, make sure they're there.
         // Meanwhile create 1 without saving it, and make sure it's not there.
@@ -50,11 +52,9 @@ class ArtworkWrapperTests: XCTestCase {
             XCTAssertEqual(fetch.count, 1)
             
             try artwork2.save()
-            fetch = try ArtworkWrapper.fetchAll()
+            fetch = try ArtworkWrapper.fetchAll(orderByCreatedDate: true)
             XCTAssertEqual(fetch.count, 2)
             
-            // order fetched results for consistent testing
-            fetch = fetch.sorted(by: { $0.created < $1.created })
             let savedArtwork1 = fetch[0]
             let savedArtwork2 = fetch[1]
             
@@ -67,7 +67,7 @@ class ArtworkWrapperTests: XCTestCase {
             XCTAssertEqual(savedArtwork2.created, later)
             XCTAssertEqual(savedArtwork2.image!.size, testImage.size)
             
-            // Note - testing equality by compariing image sizes is a slightly weak test, however since there may be JPEG compression happening at the point of storing the image to the filesystem, we can't test byte for byte. And no sense testing pixel by pixel here at all, failed image storage would be obvious running the app.
+            // Note - testing equality by comparing image sizes is a slightly weak test, however since there may be JPEG compression happening at the point of storing the image to the filesystem, we can't test byte for byte. And no sense testing pixel by pixel here at all, failed image storage would be obvious running the app.
         } catch {
             print("ERROR: %@", error)
             XCTFail()
@@ -96,6 +96,58 @@ class ArtworkWrapperTests: XCTestCase {
             print("ERROR: %@", error)
             XCTFail()
         }
+    }
+    
+    // test the reactive fetch method 
+    func testFetchAllRx() {
+        continueAfterFailure = false
+        
+        // initial test for zero entries
+        let _ = ArtworkWrapper.fetchAllRx().subscribe(
+            onNext: { response in
+                XCTAssertEqual(response.count, 0)
+        }, 
+            onError: { error in
+                XCTFail("Failed with error thrown \(error)")
+        })
+        
+        let testImage = UIImage(named: "SamplePup")!
+        let now = Date()
+        let later = Date(timeInterval: 100, since: now)
+        
+        let artwork1 = ArtworkWrapper(caption: "1", image: testImage, created: now, rating: 1)
+        let artwork2 = ArtworkWrapper(caption: "2", image: testImage, created: later, rating: 1)
+        
+        guard let _ = try? artwork1.save(), let _ = try? artwork2.save() else {
+            XCTFail("Failed to save artwork")
+            return
+        }
+        
+        // Now expect our 2 entries
+        let _ = ArtworkWrapper.fetchAllRx().subscribe(
+            onNext: { response in
+                XCTAssertEqual(response.count, 2)
+                XCTAssertEqual(response[0].rating, 1)
+                XCTAssertEqual(response[1].rating, 1)
+                XCTAssertEqual(response[0].caption, "2")
+                XCTAssertEqual(response[1].caption, "1")
+        }, 
+            onError: { error in
+                XCTFail("Failed with error thrown \(error)")
+        })
+        
+        // Do the same but test ordering it by created date
+        let _ = ArtworkWrapper.fetchAllRx(orderByCreatedDate: true).subscribe(
+            onNext: { response in
+                XCTAssertEqual(response.count, 2)
+                XCTAssertEqual(response[0].rating, 1)
+                XCTAssertEqual(response[1].rating, 1)
+                XCTAssertEqual(response[0].caption, "1")
+                XCTAssertEqual(response[1].caption, "2")
+        }, 
+            onError: { error in
+                XCTFail("Failed with error thrown \(error)")
+        })
     }
     
     

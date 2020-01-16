@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RxSwift
 
 /// A wrapper for using our CoreData `Artwork` entity more tightly without too much CoreData code floating around the project
 class ArtworkWrapper {
@@ -106,13 +107,46 @@ class ArtworkWrapper {
     }
     
     /// Simple fetch method retrieves all stored `Artwork` entities
-    public static func fetchAll() throws -> [ArtworkWrapper] {
+    /// - Parameter orderByCreatedDate: Set true to order the results by created date (ascending)
+    public static func fetchAll(orderByCreatedDate: Bool = false) throws -> [ArtworkWrapper] {
         
         let fetchRequest: NSFetchRequest<Artwork> = Artwork.fetchRequest()
         let objects = try managedContext.fetch(fetchRequest)
         
-        return objects.map {
+        let fetch = objects.map {
             ArtworkWrapper(managedObject: $0)
+        }
+        
+        if orderByCreatedDate {
+            return fetch.sorted(by: { $0.created < $1.created })
+        } else {
+            return fetch
+        }
+    }
+    
+    /// Reactive version of the fetch method, retrieves all stored `Artwork` entities
+    /// and returns them as an Observable. Note method doesn't throw, Observable will
+    /// error instead.
+    /// - Parameter orderByCreatedDate: Set true to order the results by created date (ascending)
+    public static func fetchAllRx(orderByCreatedDate: Bool = false) -> Observable<[ArtworkWrapper]> {
+        return Observable.create { observer in
+            do {
+                let fetchRequest: NSFetchRequest<Artwork> = Artwork.fetchRequest()
+                let objects = try managedContext.fetch(fetchRequest)
+                let fetch = objects.map { ArtworkWrapper(managedObject: $0) }
+                
+                if orderByCreatedDate {
+                    observer.on(.next(fetch.sorted(by: { $0.created < $1.created })))
+                } else {
+                    observer.on(.next(fetch))
+                }
+                
+                observer.on(.completed)
+            } catch {
+                observer.on(.error(error))
+            }
+            
+            return Disposables.create()
         }
     }
 }

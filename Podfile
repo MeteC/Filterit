@@ -8,10 +8,11 @@ target 'Filterit' do
   # Pods for Filterit
   pod 'RxSwift', '~> 5.0'
   pod 'RxCocoa', '~> 5.0'
-  pod 'MBProgressHUD', '~> 1.1.0'
+  pod 'MBProgressHUD', '~> 1.2.0'
   pod 'moa', '~> 12.0'
   pod 'FCAlertView', :inhibit_warnings => true
-
+  pod 'SwifterSwift'
+  
   target 'FilteritTests' do
     inherit! :search_paths
     # Pods for testing

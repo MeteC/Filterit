@@ -78,9 +78,7 @@ class SaveDialog: NSObject {
             let alert = FCAlertView()
             
             // check dark mode manually for FCAlertView
-            if #available(iOS 12.0, *) {
-                alert.darkTheme = (UIScreen.main.traitCollection.userInterfaceStyle == .dark)
-            } 
+            alert.darkTheme = (UIScreen.main.traitCollection.userInterfaceStyle == .dark)
             
             alert.makeAlertTypeRateStars { (rating) in
                 observer.onNext(.rating(count: rating))
@@ -100,15 +98,9 @@ class SaveDialog: NSObject {
             // for dark mode to look really right, need to create our own textfield
             let textField = UITextField()
             
-            if #available(iOS 13.0, *) {
-                // Placeholder text comes out invisible, and text comes out white on a light background.
-                // What we really want here is permanent "light" style for both modes
-                textField.overrideUserInterfaceStyle = .light
-            } else {
-                // But we can't do that in iOS12. So at least let's prevent white text on a light background.
-                // (Although setting placeholder text colour is not coming up for the FCAlertView implementation)
-                textField.textColor = .darkText 
-            }
+            // Placeholder text comes out invisible, and text comes out white on a light background.
+            // What we really want here is permanent "light" style for both modes
+            textField.overrideUserInterfaceStyle = .light
             
             alert.addTextField(withCustomTextField: textField, andPlaceholder: NSLocalizedString("Add a caption", comment: "")) { (caption) in
                 observer.onNext(.textField(text: caption ?? ""))

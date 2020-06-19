@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 import moa
-
+import SwifterSwift
 
 /// View controller for pulling image data from our online API, presenting image options for selection,
 /// and later segueing off to e.g. apply filters
@@ -130,7 +130,8 @@ class NetworkImageSelectViewController: UIViewController {
                     
                     // show the dialog, since we have a tab bar we'll need to include it as a child view rather than present it modeally,
                     // since iOS can lose the lower graphic context by switching tabs (and you end up with blackness below)
-                    self.view.addSubview(vc.view)
+                    self.addChildViewController(vc, toContainerView: self.view)
+//                    self.view.addSubview(vc.view)
                 } else {
                     NSLog("Error instantiating ImageApprovalViewController from storyboard!")
                 }

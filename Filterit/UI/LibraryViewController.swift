@@ -47,7 +47,10 @@ class LibraryViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         // on screen transitions, reload collection view to resize cells
-        self.collectionView.reloadData()
+        if let cv = self.collectionView {
+            // Note with library in a tab, it's possible that iOS calls this method before collectionView is set up from IB!
+            cv.reloadData()
+        }
     }
 }
 

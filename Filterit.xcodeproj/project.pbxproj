@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		CA31D4F1239A62EB00232291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB1233A281500DDBECB /* AppDelegate.swift */; };
 		CA31D4F2239A663900232291 /* Filterit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BBA233A281500DDBECB /* Filterit.xcdatamodeld */; };
 		CA466EBB23425065009C8BB7 /* ApplyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */; };
+		CA4BF65D249D0DD6003155E7 /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CA4BF65C249D0DD6003155E7 /* SwifterSwift */; };
 		CA4F1BB2233A281500DDBECB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB1233A281500DDBECB /* AppDelegate.swift */; };
 		CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB3233A281500DDBECB /* SceneDelegate.swift */; };
 		CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */; };
@@ -93,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02FF8C409428BA92CD42BC3B /* Pods_Filterit.framework in Frameworks */,
+				CA4BF65D249D0DD6003155E7 /* SwifterSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +238,9 @@
 			dependencies = (
 			);
 			name = Filterit;
+			packageProductDependencies = (
+				CA4BF65C249D0DD6003155E7 /* SwifterSwift */,
+			);
 			productName = StockFilter;
 			productReference = CA4F1BAE233A281500DDBECB /* Filterit.app */;
 			productType = "com.apple.product-type.application";
@@ -287,6 +292,9 @@
 				Base,
 			);
 			mainGroup = CA4F1BA5233A281400DDBECB;
+			packageReferences = (
+				CA4BF65B249D0DD5003155E7 /* XCRemoteSwiftPackageReference "SwifterSwift" */,
+			);
 			productRefGroup = CA4F1BAF233A281500DDBECB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -707,6 +715,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA4BF65B249D0DD5003155E7 /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA4BF65C249D0DD6003155E7 /* SwifterSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA4BF65B249D0DD5003155E7 /* XCRemoteSwiftPackageReference "SwifterSwift" */;
+			productName = SwifterSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		CA4F1BBA233A281500DDBECB /* Filterit.xcdatamodeld */ = {

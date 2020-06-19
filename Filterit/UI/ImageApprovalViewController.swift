@@ -27,6 +27,11 @@ class ImageApprovalViewController: UIViewController {
     // And this will hold both thumb and full resolution image views to fade them in/out as a group
     @IBOutlet weak var imageHolderView: UIView!
     
+    // Handle landscape and portrait switches well:
+    @IBOutlet weak var dialogSidePortraitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dialogSideLandscapeConstraint: NSLayoutConstraint!
+    
+    
     // MARK:- Setup
     
     /// Set this before showing vc, it's the image in question
@@ -97,6 +102,8 @@ class ImageApprovalViewController: UIViewController {
         if let startFrame = self.heroTransitionStartFrame {
             self.prepHeroTransition(from: startFrame)
         }
+        
+        self.selectCorrectConstraint(for: self.view.bounds.size)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,6 +113,27 @@ class ImageApprovalViewController: UIViewController {
             self.startHeroTransition()
         }
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.selectCorrectConstraint(for: size)
+    }
+    
+    /// Select the appropriate constraint for "portrait" or "landscape" mode layouts (just based on aspect ratio of screen)
+    /// - Parameter size: super view size
+    private func selectCorrectConstraint(for size: CGSize) {
+        if size.width <= size.height {
+            // Portrait (or 1:1)
+            self.dialogSidePortraitConstraint.priority = 999
+            self.dialogSideLandscapeConstraint.priority = 1
+        } else {
+            // Landscape
+            self.dialogSidePortraitConstraint.priority = 1
+            self.dialogSideLandscapeConstraint.priority = 999
+        }
+    }
+    
+    // MARK: - Actions
     
     @IBAction func pressCancel(_ sender: Any) {
         self.cancelBlock?()

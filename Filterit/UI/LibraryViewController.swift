@@ -12,6 +12,9 @@ import RxSwift
 /// Our library collection view. Displays our current library of images and permits interaction
 class LibraryViewController: UIViewController {
 
+    /// As in IB
+    private static let segueNameShowArtwork = "showArtwork"
+    
     // UI Gear
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -42,14 +45,51 @@ class LibraryViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
+//        collectionView.rx
+//            .modelSelected(ArtworkWrapper.self)
+//            .subscribe(onNext: { (artwork) in
+//                // Passing artwork as sender data
+//                self.performSegue(withIdentifier: LibraryViewController.segueNameShowArtwork, sender: artwork)
+//            })
+//            .disposed(by: disposeBag)
+        
+        // On selection we need to pull the starting frame of the image (for transition effect), as well
+        // as the artwork in question. Using a zip to combine model and item selected sequences.
+        Observable.zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(ArtworkWrapper.self))
+            .subscribe(onNext: { (indexPath, artwork) in
+                guard let cell = self.collectionView.cellForItem(at: indexPath) as? LibraryThumbCell else {
+                    assert(false, "itemSelected failed to provide cell/layout")
+                    return
+                }
+                
+                let imageFrame = self.view.convert(cell.imageView.frame, from: cell)
+                
+                // Pass tuple (artwork, imageFrame) as sender data
+                self.performSegue(withIdentifier: LibraryViewController.segueNameShowArtwork, 
+                                  sender: (artwork, imageFrame))
+            })
+            .disposed(by: disposeBag)
     }
 
+    /// Deal with screen and orientation changes
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         // on screen transitions, reload collection view to resize cells
         if let cv = self.collectionView {
             // Note with library in a tab, it's possible that iOS calls this method before collectionView is set up from IB!
             cv.reloadData()
+        }
+    }
+    
+    /// Currently just segueing to "Show Artwork" view controller
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ShowArtworkViewController {
+            // sender == (artwork, startFrame) tuple
+            guard let (artwork, startFrame) = sender as? (ArtworkWrapper, CGRect) else {
+                NSLog("Error - must use ArtworkWrapper instance as sender here")
+                return
+            }
+            destination.prepare(with: artwork, transitionFrom: startFrame)
         }
     }
 }

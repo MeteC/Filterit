@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Or3-tY-Sm6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Or3-tY-Sm6">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -110,11 +110,47 @@
                     <tabBarItem key="tabBarItem" title="Library" image="photo.on.rectangle" catalog="system" id="yFD-Bu-o8X"/>
                     <connections>
                         <outlet property="collectionView" destination="GGP-LL-1Fy" id="NMN-RU-aUf"/>
+                        <segue destination="UTC-QY-veX" kind="presentation" identifier="showArtwork" animates="NO" id="jQH-hg-7dB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VMV-jN-cVg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1407.2" y="395.32019704433498"/>
+        </scene>
+        <!--Show Artwork View Controller-->
+        <scene sceneID="Caz-cW-qdX">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="UTC-QY-veX" customClass="ShowArtworkViewController" customModule="Filterit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QNg-jU-cjm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-H8-P1a">
+                                <rect key="frame" x="67" y="342" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="461-Bq-toX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="461-Bq-toX" firstAttribute="trailing" secondItem="P7F-aY-ZyY" secondAttribute="trailing" id="DUm-DM-i4Y"/>
+                            <constraint firstItem="461-Bq-toX" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" id="LGZ-OE-sX4"/>
+                            <constraint firstItem="461-Bq-toX" firstAttribute="leading" secondItem="P7F-aY-ZyY" secondAttribute="leading" id="Mkf-Ke-zie"/>
+                            <constraint firstAttribute="bottom" secondItem="461-Bq-toX" secondAttribute="bottom" id="woR-Fe-D5z"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="P7F-aY-ZyY"/>
+                    </view>
+                    <connections>
+                        <outlet property="artworkImageView" destination="ZYk-H8-P1a" id="qfy-R3-JHr"/>
+                        <outlet property="backgroundDarkenView" destination="461-Bq-toX" id="upz-EL-mxQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kVR-l7-dKd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2268" y="394.58128078817737"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="lVZ-rT-Kf1">
@@ -197,7 +233,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3156.521739130435" y="-289.28571428571428"/>
+            <point key="canvasLocation" x="3890" y="-290"/>
         </scene>
         <!--Image Approval View Controller-->
         <scene sceneID="Lnw-4J-ikm">
@@ -335,7 +371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fS-18-Rup" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3154.4000000000001" y="393.10344827586209"/>
+            <point key="canvasLocation" x="3889" y="392"/>
         </scene>
         <!--Apply Filter-->
         <scene sceneID="Kvn-4W-hn7">
@@ -445,7 +481,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CtG-eA-5p8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4172.463768115942" y="-287.94642857142856"/>
+            <point key="canvasLocation" x="4906" y="-289"/>
         </scene>
         <!--Welcome-->
         <scene sceneID="5jb-S0-TOH">

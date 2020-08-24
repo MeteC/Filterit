@@ -122,6 +122,7 @@ class ApplyFilterViewController: UIViewController {
     ///   - asError: Set true for error alert layouts, or false for success type
     private func showAlertMessage(_ message: String, asError: Bool) {
         let alert = FCAlertView()
+        SaveDialog.applyTheme(to: alert)
         
         if asError { 
             alert.makeAlertTypeWarning()

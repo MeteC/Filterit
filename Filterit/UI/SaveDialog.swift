@@ -77,13 +77,11 @@ class SaveDialog: NSObject {
             // Create our FCAlertView, give it stars, add buttons and text field which fire onNexts
             let alert = FCAlertView()
             
-            // check dark mode manually for FCAlertView
-            alert.darkTheme = (UIScreen.main.traitCollection.userInterfaceStyle == .dark)
-            
             alert.makeAlertTypeRateStars { (rating) in
                 observer.onNext(.rating(count: rating))
             }
-            alert.colorScheme = UIColor.init(named: "Accent")
+            
+            SaveDialog.applyTheme(to: alert)
             
             alert.showAlert(withTitle: title, withSubtitle: subtitle, withCustomImage: nil, withDoneButtonTitle: NSLocalizedString("Save", comment: ""), andButtons: [])
             
@@ -109,4 +107,18 @@ class SaveDialog: NSObject {
             return Disposables.create { }
         }
     } 
+}
+
+
+extension SaveDialog {
+    
+    /// We define some theme values for our save dialog that we can also use on other FCAlertView
+    /// dialogs in this app.  
+    /// - Parameter alert: the FCAlertView to apply our consistent theme too
+    public class func applyTheme(to alert: FCAlertView) {
+        
+        // check dark mode manually for FCAlertView
+        alert.darkTheme = (UIScreen.main.traitCollection.userInterfaceStyle == .dark)
+        alert.colorScheme = UIColor.init(named: "Accent")
+    }
 }

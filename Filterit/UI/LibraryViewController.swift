@@ -45,13 +45,6 @@ class LibraryViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
-//        collectionView.rx
-//            .modelSelected(ArtworkWrapper.self)
-//            .subscribe(onNext: { (artwork) in
-//                // Passing artwork as sender data
-//                self.performSegue(withIdentifier: LibraryViewController.segueNameShowArtwork, sender: artwork)
-//            })
-//            .disposed(by: disposeBag)
         
         // On selection we need to pull the starting frame of the image (for transition effect), as well
         // as the artwork in question. Using a zip to combine model and item selected sequences.
@@ -147,8 +140,8 @@ struct LibraryThumbCellViewModel {
     let artwork: ArtworkWrapper
     let cell: LibraryThumbCell
     
-    private static let filledStar = UIImage(systemName: "star.fill")
-    private static let emptyStar = UIImage(systemName: "star")
+    static let filledStar = UIImage(systemName: "star.fill")
+    static let emptyStar = UIImage(systemName: "star")
     
     /// Take artwork, apply appropriate look to the supplied cell
     fileprivate func apply() {

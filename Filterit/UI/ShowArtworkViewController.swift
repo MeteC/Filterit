@@ -13,7 +13,10 @@ class ShowArtworkViewController: UIViewController {
 
     /// To be set during segue, to show the correct artwork
     private var artwork: ArtworkWrapper?
-    public var heroTransitionStartFrame: CGRect?
+    
+    /// And we'll store a weak reference to the underlying image view from which we're transitioning
+    private weak var underlyingImageView: UIImageView?
+
     
     /// Use constraints to transition our artwork image
     @IBOutlet weak var artworkImageConstraintTop: NSLayoutConstraint!
@@ -42,15 +45,15 @@ class ShowArtworkViewController: UIViewController {
     ///   - artwork: The artwork to show
     ///   - startFrame: The starting frame to transition in our image from. 
     ///   To be the frame of the same artwork view presented in the library, relative to the full screen window.
-    public func prepare(with artwork: ArtworkWrapper, transitionFrom startFrame: CGRect) {
+    public func prepare(with artwork: ArtworkWrapper, underlyingImageView: UIImageView) {
         self.artwork = artwork
-        self.heroTransitionStartFrame = startFrame
+        self.underlyingImageView = underlyingImageView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let startFrame = heroTransitionStartFrame, let artwork = self.artwork else {
+        guard let underlyingImageView = self.underlyingImageView, let artwork = self.artwork else {
             NSLog("Error - must call prepare(with...) before loading view!")
             return
         }
@@ -58,17 +61,20 @@ class ShowArtworkViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.artworkImageView.image = artwork.image
         
+        // Figure out start frame relative to entire view
+        let startFrame = self.view.convert(underlyingImageView.frame, from: underlyingImageView.superview)
+        
         // calculate starting constraints from frame
         self.artworkImageConstraintTop.constant = startFrame.minY
         self.artworkImageConstraintLeft.constant = startFrame.minX
         self.artworkImageConstraintBottom.constant = self.view.frame.height - startFrame.maxY
         self.artworkImageConstraintRight.constant = self.view.frame.width - startFrame.maxX
         
-        // hide details panel
-        self.detailsViewConstraintBottom.constant = -self.detailsView.frame.height
-        
         // details
         self.detailsCaptionLabel.text = artwork.caption
+        
+        // start details view hidden for smooth animation
+        self.detailsView.isHidden = true
         
         // setup stars as in LibraryThumbCellViewModel
         let f = LibraryThumbCellViewModel.filledStar
@@ -89,34 +95,52 @@ class ShowArtworkViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Fade background to dark, while animating our artwork into full frame.
+        // Animate in hero transition, and bring up details panel.
+        // First hide the original artwork view while the hero transition is occurring, 
+        // to prevent visibility of the backing layer.
+        underlyingImageView?.isHidden = true
+        
+        // hide details panel - safe area height + detailsView frame height
+        self.detailsViewConstraintBottom.constant = -(self.view.safeAreaInsets.bottom + self.detailsView.frame.height)
+        self.view.layoutIfNeeded()
+        
+        // Fade background to dark, then animate our artwork into full frame.
         // We'll also pull the star rating and caption in from below with a little bounce
-        self.backgroundDarkenView.alpha = 0
+        backgroundDarkenView.alpha = 0
         
-        let transitionDuration = 0.5
+        let artworkInsetMargin: CGFloat = 8
+        let detailsLowerMargin: CGFloat = 16
+        let heroTransitionDuration = 0.5
         
-        UIView.animate(withDuration: transitionDuration) { 
-            self.backgroundDarkenView.alpha = 1
-            
-            // Full-screen image with inset margin
-            let insetMargin: CGFloat = 8
-            
-            self.artworkImageConstraintTop.constant = insetMargin
-            self.artworkImageConstraintLeft.constant = insetMargin
-            self.artworkImageConstraintBottom.constant = insetMargin
-            self.artworkImageConstraintRight.constant = insetMargin
-            
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: heroTransitionDuration, 
+                                delay: 0, 
+                                options: [], 
+                                animations: 
+            { 
+                self.backgroundDarkenView.alpha = 1
+                
+                // Full-screen image with inset margin
+                self.artworkImageConstraintTop.constant = artworkInsetMargin
+                self.artworkImageConstraintLeft.constant = artworkInsetMargin
+                self.artworkImageConstraintBottom.constant = artworkInsetMargin
+                self.artworkImageConstraintRight.constant = artworkInsetMargin
+                self.view.layoutIfNeeded()
+                
+        }) { (finished) in
+            // on finish undo change to underlying view layers
+            self.underlyingImageView?.isHidden = false
         }
         
-        UIView.animate(withDuration: transitionDuration*2, 
-                       delay: 0, 
+        // Animate details view
+        self.detailsView.isHidden = false
+        UIView.animate(withDuration: 1.0, 
+                       delay: heroTransitionDuration / 2, 
                        usingSpringWithDamping: 0.5, 
-                       initialSpringVelocity: 0, 
+                       initialSpringVelocity: 1.0, 
                        options: [], 
                        animations: 
             { 
-                self.detailsViewConstraintBottom.constant = 25 // TODO: take safe area into account
+                self.detailsViewConstraintBottom.constant = detailsLowerMargin
                 self.view.layoutIfNeeded()
         }, completion: nil)
     }

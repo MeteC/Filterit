@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Or3-tY-Sm6">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -76,7 +76,7 @@
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="mtj-Mt-gm9" firstAttribute="top" secondItem="s69-FF-Ly7" secondAttribute="top" id="0TQ-Bh-CvO"/>
                                                 <constraint firstAttribute="trailing" secondItem="mtj-Mt-gm9" secondAttribute="trailing" id="8ho-zR-sAA"/>
@@ -130,7 +130,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-H8-P1a">
-                                <rect key="frame" x="50" y="144" width="314" height="352"/>
+                                <rect key="frame" x="94" y="100" width="226" height="696"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYX-QJ-Gfr">
                                 <rect key="frame" x="57" y="785.5" width="300" height="51.5"/>
@@ -202,12 +202,12 @@
                             <constraint firstItem="461-Bq-toX" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" id="LGZ-OE-sX4"/>
                             <constraint firstItem="zYX-QJ-Gfr" firstAttribute="centerX" secondItem="QNg-jU-cjm" secondAttribute="centerX" id="Lht-AI-Ep3"/>
                             <constraint firstItem="461-Bq-toX" firstAttribute="leading" secondItem="QNg-jU-cjm" secondAttribute="leading" id="Mkf-Ke-zie"/>
-                            <constraint firstAttribute="bottom" secondItem="ZYk-H8-P1a" secondAttribute="bottom" constant="400" id="UAY-4y-gWe"/>
+                            <constraint firstAttribute="bottom" secondItem="ZYk-H8-P1a" secondAttribute="bottom" constant="100" id="UAY-4y-gWe"/>
                             <constraint firstItem="P7F-aY-ZyY" firstAttribute="bottom" secondItem="zYX-QJ-Gfr" secondAttribute="bottom" constant="25" id="g1Y-DU-hMr"/>
-                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="leading" secondItem="P7F-aY-ZyY" secondAttribute="leading" constant="50" id="jpn-MM-cxp"/>
-                            <constraint firstItem="P7F-aY-ZyY" firstAttribute="trailing" secondItem="ZYk-H8-P1a" secondAttribute="trailing" constant="50" id="kcC-DI-LPp"/>
+                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="leading" secondItem="QNg-jU-cjm" secondAttribute="leading" constant="94" id="jpn-MM-cxp"/>
+                            <constraint firstAttribute="trailing" secondItem="ZYk-H8-P1a" secondAttribute="trailing" constant="94" id="kcC-DI-LPp"/>
                             <constraint firstAttribute="bottom" secondItem="461-Bq-toX" secondAttribute="bottom" id="woR-Fe-D5z"/>
-                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" constant="144" id="ykC-OC-vxY"/>
+                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" constant="100" id="ykC-OC-vxY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="P7F-aY-ZyY"/>
                     </view>

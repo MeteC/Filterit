@@ -55,11 +55,9 @@ class LibraryViewController: UIViewController {
                     return
                 }
                 
-                let imageFrame = self.view.convert(cell.imageView.frame, from: cell)
-                
-                // Pass tuple (artwork, imageFrame) as sender data
+                // Pass tuple of required info as sender data
                 self.performSegue(withIdentifier: LibraryViewController.segueNameShowArtwork, 
-                                  sender: (artwork, imageFrame))
+                                  sender: (artwork, cell.imageView))
             })
             .disposed(by: disposeBag)
     }
@@ -78,11 +76,11 @@ class LibraryViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ShowArtworkViewController {
             // sender == (artwork, startFrame) tuple
-            guard let (artwork, startFrame) = sender as? (ArtworkWrapper, CGRect) else {
+            guard let (artwork, imageView) = sender as? (ArtworkWrapper, UIImageView) else {
                 NSLog("Error - must use ArtworkWrapper instance as sender here")
                 return
             }
-            destination.prepare(with: artwork, transitionFrom: startFrame)
+            destination.prepare(with: artwork, underlyingImageView: imageView)
         }
     }
 }

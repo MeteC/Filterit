@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwifterSwift
 
 /// View Controller for showing our library artwork. Has a hero transition like in ImageApprovalViewController (albeit simpler).
 class ShowArtworkViewController: UIViewController {
@@ -29,7 +30,8 @@ class ShowArtworkViewController: UIViewController {
     
     @IBOutlet weak var backgroundDarkenView: UIView!
     @IBOutlet weak var artworkImageView: UIImageView!
-    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var ratingsView: UIView!
+    @IBOutlet weak var captionView: UIView!
     @IBOutlet weak var detailsCaptionLabel: UILabel!
     
     // TODO: Pull out rating stars from their various places, make a separate RatingsView to reuse.
@@ -73,9 +75,6 @@ class ShowArtworkViewController: UIViewController {
         // details
         self.detailsCaptionLabel.text = artwork.caption
         
-        // start details view hidden for smooth animation
-        self.detailsView.isHidden = true
-        
         // setup stars as in LibraryThumbCellViewModel
         let f = LibraryThumbCellViewModel.filledStar
         let e = LibraryThumbCellViewModel.emptyStar
@@ -89,7 +88,12 @@ class ShowArtworkViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.layoutForFrameSize(UIScreen.main.bounds.size)
         
+        // prepare for animations present in viewDidAppear
+        self.backgroundDarkenView.alpha = 0
+        self.captionView.alpha = 0
+        self.ratingsView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,42 +102,43 @@ class ShowArtworkViewController: UIViewController {
         // Animate in hero transition, and bring up details panel.
         // First hide the original artwork view while the hero transition is occurring, 
         // to prevent visibility of the backing layer.
-        underlyingImageView?.isHidden = true
+        self.underlyingImageView?.isHidden = true
         
         // hide details panel - safe area height + detailsView frame height
-        self.detailsViewConstraintBottom.constant = -(self.view.safeAreaInsets.bottom + self.detailsView.frame.height)
+        self.detailsViewConstraintBottom.constant = -(self.view.safeAreaInsets.bottom + self.ratingsView.frame.height)
         self.view.layoutIfNeeded()
         
         // Fade background to dark, then animate our artwork into full frame.
-        // We'll also pull the star rating and caption in from below with a little bounce
-        backgroundDarkenView.alpha = 0
-        
+        // We'll also pull the star rating in from below with a little bounce, and fade the caption in
         let artworkInsetMargin: CGFloat = 8
         let detailsLowerMargin: CGFloat = 16
-        let heroTransitionDuration = 0.5
         
-        UIView.animate(withDuration: heroTransitionDuration, 
-                                delay: 0, 
-                                options: [], 
-                                animations: 
-            { 
+        // Timing values and calculations
+        let backgroundFadeDuration = 0.2
+        let heroTransitionDelay = backgroundFadeDuration / 2
+        let heroTransitionDuration = 0.4
+        let totalDuration = heroTransitionDelay + heroTransitionDuration
+        
+        UIView.animateKeyframes(withDuration: totalDuration, delay: 0, options: []) { 
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: backgroundFadeDuration / totalDuration) { 
                 self.backgroundDarkenView.alpha = 1
-                
+            }
+            UIView.addKeyframe(withRelativeStartTime: heroTransitionDelay / totalDuration, relativeDuration: heroTransitionDuration / totalDuration) { 
                 // Full-screen image with inset margin
                 self.artworkImageConstraintTop.constant = artworkInsetMargin
                 self.artworkImageConstraintLeft.constant = artworkInsetMargin
                 self.artworkImageConstraintBottom.constant = artworkInsetMargin
                 self.artworkImageConstraintRight.constant = artworkInsetMargin
                 self.view.layoutIfNeeded()
-                
-        }) { (finished) in
+            }
+        } completion: { (finished) in
             // on finish undo change to underlying view layers
             self.underlyingImageView?.isHidden = false
         }
         
-        // Animate details view
-        self.detailsView.isHidden = false
-        UIView.animate(withDuration: 1.0, 
+        // Animate details views
+        self.ratingsView.isHidden = false
+        UIView.animate(withDuration: heroTransitionDuration, 
                        delay: heroTransitionDuration / 2, 
                        usingSpringWithDamping: 0.5, 
                        initialSpringVelocity: 1.0, 
@@ -143,6 +148,20 @@ class ShowArtworkViewController: UIViewController {
                 self.detailsViewConstraintBottom.constant = detailsLowerMargin
                 self.view.layoutIfNeeded()
         }, completion: nil)
+        
+        UIView.animate(withDuration: heroTransitionDuration, delay: backgroundFadeDuration) { 
+            self.captionView.alpha = 1
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.layoutForFrameSize(size)
+    }
+    
+    /// Landscape size screens will hide the caption, portrait will show
+    private func layoutForFrameSize(_ size: CGSize) {
+        let isPortrait = size.aspectRatio <= 1
+        self.captionView.isHidden = !isPortrait
     }
     
     /// Just for debugging for now

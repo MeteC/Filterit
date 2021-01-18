@@ -34,15 +34,15 @@ class WelcomeViewController: UIViewController {
         switch testType {
         case 0: // SaveDialog test pops up dialog and outputs response
             SaveDialog().showAlert(title: "Test Save Dialog", subtitle: nil)
-            //            .debug()
-                        .subscribe(
-                            onSuccess: { (result) in
-                                print("\(#function) result \(result)")
-                        }, 
-                            onError: { (error) in
-                                print("\(#function) error \(error)")
-                        })
-                        .disposed(by: disposeBag)
+                //            .debug()
+                .subscribe(
+                    onSuccess: { (result) in
+                        print("\(#function) result \(result)")
+                    }, 
+                    onFailure: { (error) in
+                        print("\(#function) error \(error)")
+                    })
+                .disposed(by: disposeBag)
             
         case 1: // ApplyFilterVC early tests
             let vc = self.storyboard!.instantiateViewController(withIdentifier: "ApplyFilterViewController") as! ApplyFilterViewController

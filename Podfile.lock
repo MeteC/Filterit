@@ -2,12 +2,12 @@ PODS:
   - FCAlertView (1.4.0)
   - MBProgressHUD (1.2.0)
   - moa (12.0.0)
-  - RxCocoa (5.1.1):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.1.1):
-    - RxSwift (~> 5)
-  - RxSwift (5.1.1)
+  - RxCocoa (6.0.0):
+    - RxRelay (= 6.0.0)
+    - RxSwift (= 6.0.0)
+  - RxRelay (6.0.0):
+    - RxSwift (= 6.0.0)
+  - RxSwift (6.0.0)
   - SwifterSwift (5.2.0):
     - SwifterSwift/AppKit (= 5.2.0)
     - SwifterSwift/CoreAnimation (= 5.2.0)
@@ -38,16 +38,15 @@ DEPENDENCIES:
   - FCAlertView
   - MBProgressHUD (~> 1.2.0)
   - moa (~> 12.0)
-  - RxCocoa (~> 5.0)
-  - RxSwift (~> 5.0)
+  - RxCocoa (~> 6.0)
+  - RxSwift (~> 6.0)
   - SwifterSwift
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - FCAlertView
-    - moa
   trunk:
+    - FCAlertView
     - MBProgressHUD
+    - moa
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -57,11 +56,11 @@ SPEC CHECKSUMS:
   FCAlertView: fdddd63381898c1d1a5a20c9f084fbd2c6d12f8b
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   moa: e2346f12de6c65bbca4d103950d45db9e46785ef
-  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
-  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  RxCocoa: 3f79328fafa3645b34600f37c31e64c73ae3a80e
+  RxRelay: 8d593be109c06ea850df027351beba614b012ffb
+  RxSwift: c14e798c59b9f6e9a2df8fd235602e85cc044295
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
 
-PODFILE CHECKSUM: 3c23f286011c5b2aaf2ecc84ec412c1c3f39ef82
+PODFILE CHECKSUM: e7d38096e468f39ad82dbb6c3ad2fad034892452
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0

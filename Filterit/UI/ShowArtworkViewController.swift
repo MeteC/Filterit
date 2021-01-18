@@ -158,10 +158,11 @@ class ShowArtworkViewController: UIViewController {
         self.layoutForFrameSize(size)
     }
     
-    /// Landscape size screens will hide the caption, portrait will show
+    /// Landscape size screens will hide the caption, portrait will show if caption isn't empty
     private func layoutForFrameSize(_ size: CGSize) {
         let isPortrait = size.aspectRatio <= 1
-        self.captionView.isHidden = !isPortrait
+        let caption = self.artwork?.caption ?? ""
+        self.captionView.isHidden = !isPortrait || caption.isEmpty
     }
     
     /// Just for debugging for now

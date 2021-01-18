@@ -122,12 +122,13 @@ class ApplyFilterViewController: UIViewController {
     ///   - asError: Set true for error alert layouts, or false for success type
     private func showAlertMessage(_ message: String, asError: Bool) {
         let alert = FCAlertView()
-        SaveDialog.applyTheme(to: alert)
+        alert.darkTheme = (UIScreen.main.traitCollection.userInterfaceStyle == .dark)
         
         if asError { 
             alert.makeAlertTypeWarning()
         } else {
             alert.makeAlertTypeSuccess()
+            alert.colorScheme = UIColor.init(named: "Accent")
         }
         
         let title = asError ? NSLocalizedString("Error", comment: "") : NSLocalizedString("Success", comment: "")

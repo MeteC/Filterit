@@ -18,20 +18,7 @@ struct FilterTypeViewModel {
     
     /// Presentation title for our filter
     func presentationTitle() -> String {
-        switch filter {
-            
-        case .none:
-            return NSLocalizedString("No Filter", comment: "")
-        case .sepia:
-            return NSLocalizedString("Sepia", comment: "")
-        case .colourInvert:
-            return NSLocalizedString("Invert Colours", comment: "")
-        case .vignette:
-            return NSLocalizedString("Vignette", comment: "")
-        case .zoomBlur:
-            return NSLocalizedString("Zoom Blur", comment: "")
-            
-        }
+        filter.presentationTitle
     }
     
     /// Presentation sample image for our filter

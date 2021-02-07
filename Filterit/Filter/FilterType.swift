@@ -8,26 +8,28 @@
 
 import UIKit
 
-/// Filter logic - allow for filtering of input images using basic enumerated hard-coded CIFilters
-enum FilterType: CaseIterable {
+
+protocol FilterType {
     
-    case none                   // A pass-through filter
-    case sepia                  // A standard sepia filter
-    case colourInvert           // Invert the colours
-    case vignette               // Apply a vignette (darkened image peripheries)
-    case zoomBlur               // Simulates the effect of zooming the camera while capturing the image.
-    
+    /// Provide the actual CIFilter graph for this FilterType
+    /// 
+    /// - Parameter forImageSize: the input image size is necessary for certain filters (like cropping)
+    /// - Returns: Optional filter graph, nil if filter creation failed
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph?
     
     /// Apply the given filter type to a UIImage input
     /// - Parameter image: the input image
     /// - Returns: Optional filtered image result, or nil if the filter failed
-    public func apply(to image: UIImage) -> UIImage? {
-        
-        // Quick check for `none` condition - just pass through here
-        if self == .none {
-            return image
-        }
-        
+    func apply(to image: UIImage) -> UIImage?
+    
+    /// User interface title for humans to read
+    var presentationTitle: String { get }
+}
+
+extension FilterType {
+    
+    /// Default apply (most filter types will just use their own FilterGraph)
+    func apply(to image: UIImage) -> UIImage? {
         guard let filterGraph = self.filter(forImageSize: image.size) else {
             NSLog("FilterType \(self) - Filter setup failure - couldn't create filter graph")
             return nil
@@ -35,64 +37,112 @@ enum FilterType: CaseIterable {
         
         return filterGraph.apply(to: image)
     }
+}
+
+
+/// A pass-through filter
+struct NoneFilter: FilterType {
     
+    var presentationTitle: String {
+        NSLocalizedString("No Filter", comment: "")
+    }
     
-    /// Provide the actual CIFilter graph for this FilterType
-    /// 
-    /// - Parameter forImageSize: the input image size is necessary for certain filters (like cropping)
-    /// - Returns: Optional filter graph, nil if filter creation failed
-    private func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
-        
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
+        return nil
+    }
+    
+    func apply(to image: UIImage) -> UIImage? {
+        return image
+    }
+}
+
+/// A standard sepia filter
+struct SepiaFilter: FilterType {
+    
+    var presentationTitle: String {
+        NSLocalizedString("Sepia", comment: "")
+    }
+    
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
         var graph: FilterGraph? = nil
         
-        switch self {
-            
-        case .none:
-            break
-            
-        case .sepia:
-            if let filter = CIFilter(name: "CISepiaTone") {
-                filter.setValue(0.5, forKey: kCIInputIntensityKey)
-                graph = FilterGraph(inputFilter: filter)
-            }
-            
-        case .colourInvert:
-            if let filter = CIFilter(name: "CIColorInvert") {
-                graph = FilterGraph(inputFilter: filter)
-            }
-            
-        case .vignette:
-            if let filter = CIFilter(name: "CIVignette") {
-                filter.setValue(0.9, forKey: kCIInputIntensityKey)
-                graph = FilterGraph(inputFilter: filter)
-            }
-            
-        case .zoomBlur:
-            // note - zoom blur also shifts the image up and right, so we'll correct for that here
-            if let filter = CIFilter(name: "CIZoomBlur"), 
-            let cropFilter = CIFilter(name: "CICrop") {
-                
-                // I've chosen a heavy zoom blur value, and played with numbers on the cropping filter to nicely cut out the whiteness added by the zoom blur filter
-                let blurValue = 20
-                let sideCropPercent: CGFloat = 0.1
-                let cropVector = 
-                    CIVector(x: sideCropPercent * imageSize.width, 
-                             y: sideCropPercent * imageSize.height, 
-                             z: imageSize.width - 2 * (sideCropPercent * imageSize.width), 
-                             w: imageSize.height - 2 * (sideCropPercent * imageSize.height))
-                
-                filter.setValue(blurValue, forKey: kCIInputAmountKey)
-                
-                cropFilter.setValue(cropVector, forKey: "inputRectangle")
-                
-                graph = FilterGraph(inputFilter: filter)
-                graph?.add(nextFilter: cropFilter)
-            }
+        if let filter = CIFilter(name: "CISepiaTone") {
+            filter.setValue(0.5, forKey: kCIInputIntensityKey)
+            graph = FilterGraph(inputFilter: filter)
         }
         
-        if graph == nil {
-            NSLog("WARNING: filter type \(self) returned nil filter")
+        return graph
+    }
+}
+
+/// Invert the colours
+struct ColourInvertFilter: FilterType {
+    
+    var presentationTitle: String {
+        NSLocalizedString("Invert Colours", comment: "")
+    }
+    
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
+        var graph: FilterGraph? = nil
+        
+        if let filter = CIFilter(name: "CIColorInvert") {
+            graph = FilterGraph(inputFilter: filter)
         }
+        
+        return graph
+    }
+}
+
+/// Apply a vignette (darkened image peripheries)
+struct VignetteFilter: FilterType {
+    
+    var presentationTitle: String {
+        NSLocalizedString("Vignette", comment: "")
+    }
+    
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
+        var graph: FilterGraph? = nil
+        
+        if let filter = CIFilter(name: "CIVignette") {
+            filter.setValue(0.9, forKey: kCIInputIntensityKey)
+            graph = FilterGraph(inputFilter: filter)
+        }
+        
+        return graph
+    }
+}
+
+/// Simulates the effect of zooming the camera while capturing the image.
+struct ZoomBlurFilter: FilterType {
+    
+    var presentationTitle: String {
+        NSLocalizedString("Zoom Blur", comment: "")
+    }
+    
+    func filter(forImageSize imageSize: CGSize) -> FilterGraph? {
+        var graph: FilterGraph? = nil
+        
+        // note - zoom blur also shifts the image up and right, so we'll correct for that here
+        if let filter = CIFilter(name: "CIZoomBlur"), 
+           let cropFilter = CIFilter(name: "CICrop") {
+            
+            // I've chosen a heavy zoom blur value, and played with numbers on the cropping filter to nicely cut out the whiteness added by the zoom blur filter
+            let blurValue = 20
+            let sideCropPercent: CGFloat = 0.1
+            let cropVector = 
+                CIVector(x: sideCropPercent * imageSize.width, 
+                         y: sideCropPercent * imageSize.height, 
+                         z: imageSize.width - 2 * (sideCropPercent * imageSize.width), 
+                         w: imageSize.height - 2 * (sideCropPercent * imageSize.height))
+            
+            filter.setValue(blurValue, forKey: kCIInputAmountKey)
+            
+            cropFilter.setValue(cropVector, forKey: "inputRectangle")
+            
+            graph = FilterGraph(inputFilter: filter)
+            graph?.add(nextFilter: cropFilter)
+        }
+        
         return graph
     }
 }

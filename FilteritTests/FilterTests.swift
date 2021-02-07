@@ -9,6 +9,7 @@
 import XCTest
 @testable import Filterit
 
+
 class FilterTests: XCTestCase {
 
     override func setUp() {
@@ -26,18 +27,19 @@ class FilterTests: XCTestCase {
         let testImage: UIImage! = UIImage(named: "SamplePup")
         XCTAssertNotNil(testImage)
         
-        for filterType in FilterType.allCases {
+        for filterType in FilterList.values {
             print("Testing filter type \(filterType)")
             
             let outputImage = filterType.apply(to: testImage)
             XCTAssertNotNil(outputImage)
             
-            if filterType == .none {
+            // TODO: What?? Why does this happen when we use FilterList.values, but NOT when we use values declared in this test file??
+            if filterType is NoneFilter {
                 // none case should have a total pass-through effect on the image
+                print("xxxx")
                 XCTAssertEqual(testImage, filterType.apply(to: testImage))
             } 
         }
     }
-
 
 }

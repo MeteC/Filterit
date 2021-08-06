@@ -104,7 +104,7 @@ class NetworkImageSelectViewController: UIViewController {
                     vc.preConfigureForHeroTransition(with: image, 
                                                      thumbnail: cell.imageView.image, 
                                                      startFrame: self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview), 
-                                                     acceptButtonTitle: NSLocalizedString("Apply Filter", comment: "")) 
+                                                     acceptButtonTitle: NSLocalizedString("Select Filter", comment: "")) 
                     
                     vc.acceptBlock = { [weak self] image in
                         

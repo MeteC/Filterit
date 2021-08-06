@@ -6,8 +6,10 @@
   Copyright © 2019 Mete Cakman. All rights reserved.
 */
 
+"Welcome to Filterit!" = "Welcome to Filterit!";
+
 "Add a caption" = "Add a caption";
-"Apply Filter" = "Apply Filter";
+"Select Filter" = "Select Filter";
 
 "Cancel" = "Cancel";
 "Checking Server" = "Checking Server";

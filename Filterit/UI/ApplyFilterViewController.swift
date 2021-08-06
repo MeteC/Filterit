@@ -32,6 +32,7 @@ class ApplyFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString("Select Filter", comment: "")
 
         // Did you remember to set the input image?
         assert(self.inputImage != nil, "Input image not set for ApplyFilterVC - be sure to set it before displaying ApplyFilterViewController!")

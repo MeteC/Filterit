@@ -57,7 +57,7 @@ class ApplyFilterViewController: UIViewController {
         
         // We can create our filter collection data source from our FilterType enumerator, since it's case iterable
         Observable
-            .of(FilterType.allCases)
+            .of(FilterList.values)
             .bind(to: filterCollectionView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)) 
         { (row, filter, cell) in
             

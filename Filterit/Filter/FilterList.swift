@@ -17,8 +17,12 @@ class FilterList {
         [
             NoneFilter(),
             SepiaFilter(),
-            ColourInvertFilter(),
             VignetteFilter(),
-            ZoomBlurFilter()
+            NoirFilter(),
+            ColourInvertFilter(),
+            HueShiftFilter(angle: 90),
+            HueShiftFilter(angle: 180),
+            PosterizeFilter(),
+            ZoomBlurFilter(),
         ]
 }

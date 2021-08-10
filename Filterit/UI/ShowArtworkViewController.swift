@@ -33,10 +33,13 @@ class ShowArtworkViewController: UIViewController {
     @IBOutlet weak var artworkImageConstraintLeft: NSLayoutConstraint!
     
     @IBOutlet weak var backgroundDarkenView: UIView!
+    @IBOutlet weak var artworkHolderScrollView: UIScrollView!
     @IBOutlet weak var artworkImageView: UIImageView!
     @IBOutlet weak var ratingsView: UIView!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsCaptionLabel: UILabel!
+    
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     
     // TODO: Pull out rating stars from their various places, make a separate RatingsView to reuse.
@@ -123,20 +126,30 @@ class ShowArtworkViewController: UIViewController {
         }
     }
     
+    private var closeActionBinder: Binder<Void> {
+        Binder(self) { (`self`, _) in
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     /// We'll set up user interaction - tap to close, and share button, using Rx
     /// subscriptions.
     private func setupActionsRx() {
         
-        // Add tap gesture to close, demonstrating use of Rx rather than the traditional
-        // objc selector
-        let tap = UITapGestureRecognizer()
-        self.view.addGestureRecognizer(tap)
-        tap.rx.event
-            .filter { $0.state == .ended }
-            .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
-            })
+        closeButton.rx.tap
+            .bind(to: closeActionBinder)
             .disposed(by: disposeBag)
+        
+//        // Add tap gesture to close, demonstrating use of Rx rather than the traditional
+//        // objc selector
+//        let tap = UITapGestureRecognizer()
+//        self.view.addGestureRecognizer(tap)
+//        tap.rx.event
+//            .filter { $0.state == .ended }
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.dismiss(animated: true, completion: nil)
+//            })
+//            .disposed(by: disposeBag)
         
         // Add share button action. We can ensure image is valid before binding our action
         if let image = self.artwork?.image {
@@ -170,8 +183,8 @@ class ShowArtworkViewController: UIViewController {
         // Fade background to dark, then animate our artwork into full frame.
         // We'll also fade the details view in
         let artworkInsetMargin: CGFloat = 0
-        let artworkTopMargin: CGFloat = self.view.size.height * 0.1
-        let artworkBottomMargin: CGFloat = self.view.size.height * 0.33
+        let artworkTopMargin: CGFloat = 0//self.view.size.height * 0.1
+        let artworkBottomMargin: CGFloat = 0//self.view.size.height * 0.33
         
         // Timing values and calculations
         let backgroundFadeDuration = 0.2
@@ -201,14 +214,27 @@ class ShowArtworkViewController: UIViewController {
         }
     }
     
+    /// Handle orientation changes
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.layoutForFrameSize(size)
+        
+        // To prevent scrollview glitches, on orientation change we'll revert zoom levels to 1
+        self.artworkHolderScrollView.setZoomScale(1.0, animated: true)
     }
     
-    /// Landscape size screens will hide the caption, portrait will show if caption isn't empty
+    /// Repeat code modifying the UI for the current screen layout size 
     private func layoutForFrameSize(_ size: CGSize) {
-        let isPortrait = size.aspectRatio <= 1
-        let caption = self.artwork?.caption ?? ""
-        self.detailsView.isHidden = !isPortrait || caption.isEmpty
+        // Landscape size screens will hide the details view.
+        let isLandscapeAspect = size.aspectRatio > 1
+        self.detailsView.isHidden = isLandscapeAspect
+    }
+}
+
+// MARK:- UIScrollViewDelegate
+extension ShowArtworkViewController: UIScrollViewDelegate {
+    
+    /// Enable zooming on artwork
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.artworkImageView
     }
 }

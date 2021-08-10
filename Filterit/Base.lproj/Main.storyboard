@@ -129,11 +129,45 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="461-Bq-toX">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-H8-P1a">
-                                <rect key="frame" x="94" y="100" width="226" height="696"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="10" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IiF-gS-cHi">
+                                <rect key="frame" x="74" y="80" width="266" height="736"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-H8-P1a">
+                                        <rect key="frame" x="0.0" y="0.0" width="266" height="736"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ZYk-H8-P1a" secondAttribute="bottom" id="4my-5I-8MW"/>
+                                    <constraint firstItem="ZYk-H8-P1a" firstAttribute="top" secondItem="IiF-gS-cHi" secondAttribute="top" id="Ajh-ru-hOG"/>
+                                    <constraint firstItem="ZYk-H8-P1a" firstAttribute="height" secondItem="IiF-gS-cHi" secondAttribute="height" id="cvm-BR-OXl"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZYk-H8-P1a" secondAttribute="trailing" id="lyd-iO-GxM"/>
+                                    <constraint firstItem="ZYk-H8-P1a" firstAttribute="width" secondItem="IiF-gS-cHi" secondAttribute="width" id="sSw-TK-mb7"/>
+                                    <constraint firstItem="ZYk-H8-P1a" firstAttribute="leading" secondItem="IiF-gS-cHi" secondAttribute="leading" id="tNW-Ch-jnO"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="MqJ-Gg-jdc"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="b6T-2U-GVD"/>
+                                <connections>
+                                    <outlet property="delegate" destination="UTC-QY-veX" id="zhG-qY-JIj"/>
+                                </connections>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3d-eC-o38">
+                                <rect key="frame" x="354" y="52" width="40" height="40"/>
+                                <color key="backgroundColor" name="System Background Translucent 60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="3Kb-yM-CZv"/>
+                                    <constraint firstAttribute="width" constant="40" id="RaC-Kn-zo3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" name="Back Button Tint"/>
+                                <state key="normal" image="xmark.square.fill" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNi-62-czy">
                                 <rect key="frame" x="0.0" y="555" width="414" height="341"/>
                                 <subviews>
@@ -219,7 +253,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" name="System Background Translucent 60"/>
+                                <color key="backgroundColor" name="System Background Translucent 90"/>
                                 <constraints>
                                     <constraint firstItem="s2B-vh-jER" firstAttribute="top" secondItem="wlf-lI-7dB" secondAttribute="bottom" constant="16" id="3ix-vb-iy6"/>
                                     <constraint firstItem="7BI-ep-nUP" firstAttribute="leading" secondItem="BNi-62-czy" secondAttribute="leading" constant="8" id="CaP-dQ-UXu"/>
@@ -238,28 +272,32 @@
                         <viewLayoutGuide key="safeArea" id="P7F-aY-ZyY"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="P7F-aY-ZyY" firstAttribute="trailing" secondItem="Z3d-eC-o38" secondAttribute="trailing" constant="20" id="76K-fK-jK3"/>
+                            <constraint firstItem="IiF-gS-cHi" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" constant="80" id="CX3-Ek-adP"/>
                             <constraint firstItem="461-Bq-toX" firstAttribute="trailing" secondItem="QNg-jU-cjm" secondAttribute="trailing" id="DUm-DM-i4Y"/>
                             <constraint firstItem="461-Bq-toX" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" id="LGZ-OE-sX4"/>
                             <constraint firstItem="461-Bq-toX" firstAttribute="leading" secondItem="QNg-jU-cjm" secondAttribute="leading" id="Mkf-Ke-zie"/>
-                            <constraint firstAttribute="bottom" secondItem="ZYk-H8-P1a" secondAttribute="bottom" constant="100" id="UAY-4y-gWe"/>
+                            <constraint firstItem="IiF-gS-cHi" firstAttribute="leading" secondItem="QNg-jU-cjm" secondAttribute="leading" constant="74" id="Qbm-dA-rvv"/>
                             <constraint firstItem="BNi-62-czy" firstAttribute="leading" secondItem="P7F-aY-ZyY" secondAttribute="leading" id="Wvs-lM-Q3F"/>
                             <constraint firstAttribute="bottom" secondItem="BNi-62-czy" secondAttribute="bottom" id="XpT-gx-th9"/>
                             <constraint firstItem="s2B-vh-jER" firstAttribute="top" secondItem="P7F-aY-ZyY" secondAttribute="bottom" id="aKm-rd-pYZ"/>
-                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="leading" secondItem="QNg-jU-cjm" secondAttribute="leading" constant="94" id="jpn-MM-cxp"/>
-                            <constraint firstAttribute="trailing" secondItem="ZYk-H8-P1a" secondAttribute="trailing" constant="94" id="kcC-DI-LPp"/>
+                            <constraint firstAttribute="bottom" secondItem="IiF-gS-cHi" secondAttribute="bottom" constant="80" id="hO0-vI-s0f"/>
                             <constraint firstItem="BNi-62-czy" firstAttribute="height" relation="lessThanOrEqual" secondItem="P7F-aY-ZyY" secondAttribute="height" multiplier="0.45" id="kjV-UQ-523"/>
+                            <constraint firstItem="Z3d-eC-o38" firstAttribute="top" secondItem="P7F-aY-ZyY" secondAttribute="top" constant="8" id="lwq-hl-Kk4"/>
+                            <constraint firstAttribute="trailing" secondItem="IiF-gS-cHi" secondAttribute="trailing" constant="74" id="ntB-Ml-0Ab"/>
                             <constraint firstAttribute="bottom" secondItem="461-Bq-toX" secondAttribute="bottom" id="woR-Fe-D5z"/>
                             <constraint firstItem="BNi-62-czy" firstAttribute="trailing" secondItem="P7F-aY-ZyY" secondAttribute="trailing" id="xpd-Ec-wfZ"/>
-                            <constraint firstItem="ZYk-H8-P1a" firstAttribute="top" secondItem="QNg-jU-cjm" secondAttribute="top" constant="100" id="ykC-OC-vxY"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="artworkImageConstraintBottom" destination="UAY-4y-gWe" id="MSU-uH-ZNJ"/>
-                        <outlet property="artworkImageConstraintLeft" destination="jpn-MM-cxp" id="LgW-2J-PPZ"/>
-                        <outlet property="artworkImageConstraintRight" destination="kcC-DI-LPp" id="e2O-4v-NAk"/>
-                        <outlet property="artworkImageConstraintTop" destination="ykC-OC-vxY" id="P7U-mj-zH1"/>
+                        <outlet property="artworkHolderScrollView" destination="IiF-gS-cHi" id="QL6-mc-JJH"/>
+                        <outlet property="artworkImageConstraintBottom" destination="hO0-vI-s0f" id="I8i-pi-G02"/>
+                        <outlet property="artworkImageConstraintLeft" destination="Qbm-dA-rvv" id="Fsw-mA-682"/>
+                        <outlet property="artworkImageConstraintRight" destination="ntB-Ml-0Ab" id="jfK-xL-SFU"/>
+                        <outlet property="artworkImageConstraintTop" destination="CX3-Ek-adP" id="25O-Ru-rnC"/>
                         <outlet property="artworkImageView" destination="ZYk-H8-P1a" id="qfy-R3-JHr"/>
                         <outlet property="backgroundDarkenView" destination="461-Bq-toX" id="upz-EL-mxQ"/>
+                        <outlet property="closeButton" destination="Z3d-eC-o38" id="Ior-WL-OOi"/>
                         <outlet property="detailsCaptionLabel" destination="7BI-ep-nUP" id="IdX-Z9-1Mp"/>
                         <outlet property="detailsView" destination="BNi-62-czy" id="OZP-sP-XrC"/>
                         <outlet property="ratingStar1" destination="BNg-OG-ptL" id="a5g-Xd-tgR"/>
@@ -836,14 +874,24 @@
         <image name="heart.circle" catalog="system" width="128" height="121"/>
         <image name="pencil.circle" catalog="system" width="128" height="121"/>
         <image name="photo.on.rectangle" catalog="system" width="128" height="96"/>
+        <image name="xmark.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="Accent">
             <color red="0.0" green="0.55686274509803924" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Back Button Tint">
+            <color white="0.2954383039856977" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="System Background Translucent 60">
             <color white="1" alpha="0.60100001096725464" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
+        <namedColor name="System Background Translucent 90">
+            <color white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

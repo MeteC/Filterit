@@ -8,8 +8,13 @@
 
 import UIKit
 import SwifterSwift
+import RxSwift
+import RxCocoa
+import FCAlertView
 
-/// View Controller for showing our library artwork. Has a hero transition like in ImageApprovalViewController (albeit simpler).
+
+/// View Controller for showing our library artwork. 
+/// Has a hero transition like in ImageApprovalViewController (albeit simpler).
 class ShowArtworkViewController: UIViewController {
 
     /// To be set during segue, to show the correct artwork
@@ -18,6 +23,8 @@ class ShowArtworkViewController: UIViewController {
     /// And we'll store a weak reference to the underlying image view from which we're transitioning
     private weak var underlyingImageView: UIImageView?
 
+    // Rx Gear
+    private let disposeBag = DisposeBag()
     
     /// Use constraints to transition our artwork image
     @IBOutlet weak var artworkImageConstraintTop: NSLayoutConstraint!
@@ -25,14 +32,12 @@ class ShowArtworkViewController: UIViewController {
     @IBOutlet weak var artworkImageConstraintRight: NSLayoutConstraint!
     @IBOutlet weak var artworkImageConstraintLeft: NSLayoutConstraint!
     
-    /// Constraint for positioning of the details panel (stars, caption,..)
-    @IBOutlet weak var detailsViewConstraintBottom: NSLayoutConstraint!
-    
     @IBOutlet weak var backgroundDarkenView: UIView!
     @IBOutlet weak var artworkImageView: UIImageView!
     @IBOutlet weak var ratingsView: UIView!
-    @IBOutlet weak var captionView: UIView!
+    @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsCaptionLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
     
     // TODO: Pull out rating stars from their various places, make a separate RatingsView to reuse.
     @IBOutlet weak var ratingStar1: UIImageView!
@@ -45,8 +50,8 @@ class ShowArtworkViewController: UIViewController {
     /// Call this during segue to set artwork correctly and prepare our appearance transition
     /// - Parameters:
     ///   - artwork: The artwork to show
-    ///   - startFrame: The starting frame to transition in our image from. 
-    ///   To be the frame of the same artwork view presented in the library, relative to the full screen window.
+    ///   - underlyingImageView: The origin image view we'll use as the start point for
+    ///   our hero transition animation
     public func prepare(with artwork: ArtworkWrapper, underlyingImageView: UIImageView) {
         self.artwork = artwork
         self.underlyingImageView = underlyingImageView
@@ -84,6 +89,65 @@ class ShowArtworkViewController: UIViewController {
         self.ratingStar3.image = artwork.rating > 2 ? f:e
         self.ratingStar4.image = artwork.rating > 3 ? f:e
         self.ratingStar5.image = artwork.rating > 4 ? f:e
+        
+        setupActionsRx()
+    }
+    
+    /// RxCocoa Binders are normally used to clearly demarcate assignation style
+    /// subscriptions, but I find they can also be used to nicely separate the
+    /// imperative requirements of action code from the declarative code setting up
+    /// control elements' Rx subscriptions.
+    ///
+    /// This "action binder" performs our Share button functionality
+    private var shareActionBinder: Binder<UIImage> {
+        Binder(self) { (`self`, image) in
+            // Show the standard iOS share view controller
+            let shareVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            
+            // We'll add a completion handler to deal with actions of interest - like
+            // successfully saving to the photo roll
+            shareVC.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
+                if completed, let type = activityType {
+                    if type == .saveToCameraRoll {
+                        let alert = FCAlertView()
+                        SaveDialog.applyTheme(to: alert)
+                        alert.showAlert(withTitle: NSLocalizedString("Saved!", comment: ""), 
+                                        withSubtitle: NSLocalizedString("Your artwork has been saved to your iOS Photos library", comment: ""), 
+                                        withCustomImage: nil, 
+                                        withDoneButtonTitle: NSLocalizedString("OK", comment: ""), 
+                                        andButtons: [])
+                    }
+                }
+            }
+            self.present(shareVC, animated: true, completion: nil)
+        }
+    }
+    
+    /// We'll set up user interaction - tap to close, and share button, using Rx
+    /// subscriptions.
+    private func setupActionsRx() {
+        
+        // Add tap gesture to close, demonstrating use of Rx rather than the traditional
+        // objc selector
+        let tap = UITapGestureRecognizer()
+        self.view.addGestureRecognizer(tap)
+        tap.rx.event
+            .filter { $0.state == .ended }
+            .subscribe(onNext: { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        // Add share button action. We can ensure image is valid before binding our action
+        if let image = self.artwork?.image {
+            shareButton.rx.tap
+                .map { image }
+                .bind(to: shareActionBinder)
+                .disposed(by: disposeBag)
+        } else {
+            NSLog("ERROR: artwork.image is not set correctly, share button disabled")
+            shareButton.isEnabled = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,8 +156,7 @@ class ShowArtworkViewController: UIViewController {
         
         // prepare for animations present in viewDidAppear
         self.backgroundDarkenView.alpha = 0
-        self.captionView.alpha = 0
-        self.ratingsView.isHidden = true
+        self.detailsView.alpha = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -104,14 +167,11 @@ class ShowArtworkViewController: UIViewController {
         // to prevent visibility of the backing layer.
         self.underlyingImageView?.isHidden = true
         
-        // hide details panel - safe area height + detailsView frame height
-        self.detailsViewConstraintBottom.constant = -(self.view.safeAreaInsets.bottom + self.ratingsView.frame.height)
-        self.view.layoutIfNeeded()
-        
         // Fade background to dark, then animate our artwork into full frame.
-        // We'll also pull the star rating in from below with a little bounce, and fade the caption in
-        let artworkInsetMargin: CGFloat = 8
-        let detailsLowerMargin: CGFloat = 16
+        // We'll also fade the details view in
+        let artworkInsetMargin: CGFloat = 0
+        let artworkTopMargin: CGFloat = self.view.size.height * 0.1
+        let artworkBottomMargin: CGFloat = self.view.size.height * 0.33
         
         // Timing values and calculations
         let backgroundFadeDuration = 0.2
@@ -125,9 +185,9 @@ class ShowArtworkViewController: UIViewController {
             }
             UIView.addKeyframe(withRelativeStartTime: heroTransitionDelay / totalDuration, relativeDuration: heroTransitionDuration / totalDuration) { 
                 // Full-screen image with inset margin
-                self.artworkImageConstraintTop.constant = artworkInsetMargin
+                self.artworkImageConstraintTop.constant = artworkTopMargin
                 self.artworkImageConstraintLeft.constant = artworkInsetMargin
-                self.artworkImageConstraintBottom.constant = artworkInsetMargin
+                self.artworkImageConstraintBottom.constant = artworkBottomMargin
                 self.artworkImageConstraintRight.constant = artworkInsetMargin
                 self.view.layoutIfNeeded()
             }
@@ -136,21 +196,8 @@ class ShowArtworkViewController: UIViewController {
             self.underlyingImageView?.isHidden = false
         }
         
-        // Animate details views
-        self.ratingsView.isHidden = false
-        UIView.animate(withDuration: heroTransitionDuration, 
-                       delay: heroTransitionDuration / 2, 
-                       usingSpringWithDamping: 0.5, 
-                       initialSpringVelocity: 1.0, 
-                       options: [], 
-                       animations: 
-            { 
-                self.detailsViewConstraintBottom.constant = detailsLowerMargin
-                self.view.layoutIfNeeded()
-        }, completion: nil)
-        
         UIView.animate(withDuration: heroTransitionDuration, delay: backgroundFadeDuration) { 
-            self.captionView.alpha = 1
+            self.detailsView.alpha = 1
         }
     }
     
@@ -162,11 +209,6 @@ class ShowArtworkViewController: UIViewController {
     private func layoutForFrameSize(_ size: CGSize) {
         let isPortrait = size.aspectRatio <= 1
         let caption = self.artwork?.caption ?? ""
-        self.captionView.isHidden = !isPortrait || caption.isEmpty
-    }
-    
-    /// Just for debugging for now
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.dismiss(animated: true, completion: nil)
+        self.detailsView.isHidden = !isPortrait || caption.isEmpty
     }
 }

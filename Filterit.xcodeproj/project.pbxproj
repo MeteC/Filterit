@@ -27,6 +27,7 @@
 		CA5193A0234F67A900403122 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA51939F234F67A900403122 /* FilterTests.swift */; };
 		CA5193A1234F683100403122 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA4F1BBD233A281600DDBECB /* Assets.xcassets */; };
 		CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA59EB4B234CE11F00AA2721 /* Colors.xcassets */; };
+		CA6DA4E526C40C37009A5A06 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA4E426C40C37009A5A06 /* RatingView.swift */; };
 		CA84C4C223CE177B00ECF276 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */; };
 		CA920C3423741FF20086484D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA920C3223741FF20086484D /* Localizable.strings */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
@@ -81,6 +82,7 @@
 		CA51939D234F4A9B00403122 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		CA51939F234F67A900403122 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		CA59EB4B234CE11F00AA2721 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		CA6DA4E426C40C37009A5A06 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		CA920C3323741FF20086484D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */,
 				CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */,
 				CA4F1BB5233A281500DDBECB /* NetworkImageSelectViewController.swift */,
+				CA6DA4E426C40C37009A5A06 /* RatingView.swift */,
 				CACDCC55234381A1005434FB /* SaveDialog.swift */,
 				CAC41A6524F40AA8009C1E8D /* ShowArtworkViewController.swift */,
 				CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */,
@@ -433,6 +436,7 @@
 				CA84C4C223CE177B00ECF276 /* LibraryViewController.swift in Sources */,
 				CABB8FD926BD4F0600B1A2BC /* VignetteFilter.swift in Sources */,
 				CABB8FD826BD4F0600B1A2BC /* NoneFilter.swift in Sources */,
+				CA6DA4E526C40C37009A5A06 /* RatingView.swift in Sources */,
 				CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */,
 				CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */,
 				CAC41A6624F40AA8009C1E8D /* ShowArtworkViewController.swift in Sources */,

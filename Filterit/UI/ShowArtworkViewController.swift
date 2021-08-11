@@ -35,19 +35,12 @@ class ShowArtworkViewController: UIViewController {
     @IBOutlet weak var backgroundDarkenView: UIView!
     @IBOutlet weak var artworkHolderScrollView: UIScrollView!
     @IBOutlet weak var artworkImageView: UIImageView!
-    @IBOutlet weak var ratingsView: UIView!
+    @IBOutlet weak var ratingsView: RatingView!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsCaptionLabel: UILabel!
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
-    // TODO: Pull out rating stars from their various places, make a separate RatingsView to reuse.
-    @IBOutlet weak var ratingStar1: UIImageView!
-    @IBOutlet weak var ratingStar2: UIImageView!
-    @IBOutlet weak var ratingStar3: UIImageView!
-    @IBOutlet weak var ratingStar4: UIImageView!
-    @IBOutlet weak var ratingStar5: UIImageView!
     
     
     /// Call this during segue to set artwork correctly and prepare our appearance transition
@@ -80,18 +73,9 @@ class ShowArtworkViewController: UIViewController {
         self.artworkImageConstraintBottom.constant = self.view.frame.height - startFrame.maxY
         self.artworkImageConstraintRight.constant = self.view.frame.width - startFrame.maxX
         
-        // details
+        // details & rating
         self.detailsCaptionLabel.text = artwork.caption
-        
-        // setup stars as in LibraryThumbCellViewModel
-        let f = LibraryThumbCellViewModel.filledStar
-        let e = LibraryThumbCellViewModel.emptyStar
-        
-        self.ratingStar1.image = artwork.rating > 0 ? f:e
-        self.ratingStar2.image = artwork.rating > 1 ? f:e
-        self.ratingStar3.image = artwork.rating > 2 ? f:e
-        self.ratingStar4.image = artwork.rating > 3 ? f:e
-        self.ratingStar5.image = artwork.rating > 4 ? f:e
+        self.ratingsView.rating = Int(artwork.rating)
         
         setupActionsRx()
     }
@@ -113,6 +97,7 @@ class ShowArtworkViewController: UIViewController {
                 if completed, let type = activityType {
                     if type == .saveToCameraRoll {
                         let alert = FCAlertView()
+                        alert.makeAlertTypeSuccess()
                         SaveDialog.applyTheme(to: alert)
                         alert.showAlert(withTitle: NSLocalizedString("Saved!", comment: ""), 
                                         withSubtitle: NSLocalizedString("Your artwork has been saved to your iOS Photos library", comment: ""), 
@@ -139,17 +124,6 @@ class ShowArtworkViewController: UIViewController {
         closeButton.rx.tap
             .bind(to: closeActionBinder)
             .disposed(by: disposeBag)
-        
-//        // Add tap gesture to close, demonstrating use of Rx rather than the traditional
-//        // objc selector
-//        let tap = UITapGestureRecognizer()
-//        self.view.addGestureRecognizer(tap)
-//        tap.rx.event
-//            .filter { $0.state == .ended }
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.dismiss(animated: true, completion: nil)
-//            })
-//            .disposed(by: disposeBag)
         
         // Add share button action. We can ensure image is valid before binding our action
         if let image = self.artwork?.image {

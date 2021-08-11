@@ -30,8 +30,7 @@ class WelcomeViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
-        let isLandscapeAspect = size.width > size.height
+        let isLandscapeAspect = size.aspectRatio > 1
         configureUi(landscape: isLandscapeAspect, animate: true)
     }
     

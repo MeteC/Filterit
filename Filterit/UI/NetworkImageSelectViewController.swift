@@ -55,7 +55,9 @@ class NetworkImageSelectViewController: UIViewController {
             .flatMapLatest { _ in self.pullAPIData() }
         
         // on tap, we map out our API data observable
-        let onTap = refreshButtonItem.rx.tap.flatMapLatest { self.pullAPIData() }
+        let onTap = refreshButtonItem.rx.tap.flatMapLatest { 
+            self.pullAPIData() 
+        }
         
         // We merge both of the above event sequences into one, so our dataSource is driven by viewDidAppear AND refresh button tap.
         let dataSource = Observable.merge([onAppear, onTap]) // note you merge two sequences of the same type

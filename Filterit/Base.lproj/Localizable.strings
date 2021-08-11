@@ -25,11 +25,14 @@
 "OK" = "OK";
 
 "Save" = "Save";
+"Saved!" = "Saved!";
 "Save Image" = "Save Image";
 "Sepia" = "Sepia";
 "Success" = "Success";
 "Successfully saved image!" = "Successfully saved image!";
 
 "Vignette" = "Vignette";
+
+"Your artwork has been saved to your iOS Photos library" = "Your artwork has been saved to your iOS Photos library";
 
 "Zoom Blur" = "Zoomed Blur";

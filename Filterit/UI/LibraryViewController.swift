@@ -77,7 +77,7 @@ class LibraryViewController: UIViewController {
         if let destination = segue.destination as? ShowArtworkViewController {
             // sender == (artwork, startFrame) tuple
             guard let (artwork, imageView) = sender as? (ArtworkWrapper, UIImageView) else {
-                NSLog("Error - must use ArtworkWrapper instance as sender here")
+                NSLog("Error - must pass (ArtworkWrapper, UIImageView) tuple as sender here")
                 return
             }
             destination.prepare(with: artwork, underlyingImageView: imageView)

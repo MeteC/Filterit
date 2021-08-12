@@ -39,9 +39,7 @@ class LibraryViewController: UIViewController {
         // and bind them to our collection view
         onAppear.bind(to: collectionView.rx.items(cellIdentifier: "LibraryCell", cellType: LibraryThumbCell.self)) {
             (row, element, cell) in
-            
-            // Apply our look using a view model
-            LibraryThumbCellViewModel(artwork: element, cell: cell).apply()
+            cell.apply(artwork: element)
         }
         .disposed(by: disposeBag)
         
@@ -122,37 +120,12 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - LibraryThumbCell
 class LibraryThumbCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var ratingView: RatingView!
     
-    @IBOutlet weak var ratingStar1: UIImageView!
-    @IBOutlet weak var ratingStar2: UIImageView!
-    @IBOutlet weak var ratingStar3: UIImageView!
-    @IBOutlet weak var ratingStar4: UIImageView!
-    @IBOutlet weak var ratingStar5: UIImageView!
-    
-}
-
-// MARK: - LibraryThumbCellViewModel
-/// A simple view-model that configures our library thumb cells nicely
-struct LibraryThumbCellViewModel {
-    
-    let artwork: ArtworkWrapper
-    let cell: LibraryThumbCell
-    
-    static let filledStar = UIImage(systemName: "star.fill")
-    static let emptyStar = UIImage(systemName: "star")
-    
-    /// Take artwork, apply appropriate look to the supplied cell
-    fileprivate func apply() {
-        cell.imageView.image = artwork.image
-        
-        // just decluttering the next 5 lines a bit with shorthand
-        let f = LibraryThumbCellViewModel.filledStar
-        let e = LibraryThumbCellViewModel.emptyStar
-        
-        cell.ratingStar1.image = artwork.rating > 0 ? f:e
-        cell.ratingStar2.image = artwork.rating > 1 ? f:e
-        cell.ratingStar3.image = artwork.rating > 2 ? f:e
-        cell.ratingStar4.image = artwork.rating > 3 ? f:e
-        cell.ratingStar5.image = artwork.rating > 4 ? f:e
+    /// In a more complex example we might use a ViewModel class for applying model
+    /// layer data to our UI, but this case is uber simple.
+    fileprivate func apply(artwork: ArtworkWrapper) {
+        imageView.image = artwork.image
+        ratingView.rating = Int(artwork.rating)
     }
 }

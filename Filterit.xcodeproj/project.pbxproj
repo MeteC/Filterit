@@ -30,6 +30,7 @@
 		CA6DA4E526C40C37009A5A06 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6DA4E426C40C37009A5A06 /* RatingView.swift */; };
 		CA84C4C223CE177B00ECF276 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */; };
 		CA920C3423741FF20086484D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA920C3223741FF20086484D /* Localizable.strings */; };
+		CA9DB85526CBD43800AFC84D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA9DB85426CBD43800AFC84D /* README.md */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CABB8FD126BD4EC800B1A2BC /* ZoomBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */; };
@@ -85,6 +86,7 @@
 		CA6DA4E426C40C37009A5A06 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		CA920C3323741FF20086484D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CA9DB85426CBD43800AFC84D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomBlurFilter.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		CA4F1BA5233A281400DDBECB = {
 			isa = PBXGroup;
 			children = (
+				CA9DB85426CBD43800AFC84D /* README.md */,
 				CA4F1BB0233A281500DDBECB /* Filterit */,
 				CA4F1BCA233A281700DDBECB /* FilteritTests */,
 				CA4F1BAF233A281500DDBECB /* Products */,
@@ -342,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9DB85526CBD43800AFC84D /* README.md in Resources */,
 				CA920C3423741FF20086484D /* Localizable.strings in Resources */,
 				CA4F1BC1233A281600DDBECB /* LaunchScreen.storyboard in Resources */,
 				CA59EB4C234CE11F00AA2721 /* Colors.xcassets in Resources */,
@@ -628,6 +632,7 @@
 			baseConfigurationReference = C7645A5BD639CEED2EAE796B /* Pods-Filterit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 89J6G3234Z;
 				INFOPLIST_FILE = Filterit/Info.plist;
@@ -638,6 +643,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.metec.Filterit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -648,6 +654,7 @@
 			baseConfigurationReference = CE3C0DAD85F40B827F176898 /* Pods-Filterit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 89J6G3234Z;
 				INFOPLIST_FILE = Filterit/Info.plist;
@@ -658,6 +665,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.metec.Filterit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

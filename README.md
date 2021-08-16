@@ -1,14 +1,16 @@
 # Filterit
 Personal (public) portfolio work - code demonstration of a fully working app built in a reactive style.
 
-A reactive (RxSwift) app which allows the user to apply various filters to images pulled from the web and save their work to a local library, synced for the user in iCloud. 
+A reactive (RxSwift-based) app which allows the user to apply various filters to images pulled from the web and save their work to a local library, then share with others. 
 
-Created for iOS13. Note I'm using Storyboards rather than SwiftUI in this app.
+Created for iOS13+, using UIKit rather than SwiftUI.
 
-### Demonstrated tech: 
-- RxSwift 
-- JSON 
-- RESTful API prototype 
+### Demonstrated tech list: 
+- MVVM architecture
+- RxSwift (+ RxCocoa UIKit bindings)
 - CoreData 
-- CloudKit
-- et al.
+- CoreImage
+- RESTful API prototype 
+- JSON 
+- Interface Builder Designables
+- Unit Testing

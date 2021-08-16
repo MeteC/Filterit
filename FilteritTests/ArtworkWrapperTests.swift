@@ -16,7 +16,6 @@ class ArtworkWrapperTests: XCTestCase {
     // class variety of setUp() just runs once per test suite.. inject a mock CoreData container here
     override class func setUp() {
         super.setUp()
-        
         ArtworkWrapper.persistentContainer = ArtworkWrapperTests.mockPersistentContainer
     }
     
@@ -25,7 +24,7 @@ class ArtworkWrapperTests: XCTestCase {
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        // Clear database
+        // Clear database between tests
         if let artworks = try? ArtworkWrapper.fetchAll() {
             artworks.forEach { try! $0.remove() }
         }
@@ -69,8 +68,7 @@ class ArtworkWrapperTests: XCTestCase {
             
             // Note - testing equality by comparing image sizes is a slightly weak test, however since there may be JPEG compression happening at the point of storing the image to the filesystem, we can't test byte for byte. And no sense testing pixel by pixel here at all, failed image storage would be obvious running the app.
         } catch {
-            print("ERROR: %@", error)
-            XCTFail()
+            XCTFail("ERROR: \(error)")
         }
     }
 
@@ -78,7 +76,7 @@ class ArtworkWrapperTests: XCTestCase {
         // Create 1 Artwork object, store it, then remove it again
         let testImage = UIImage(named: "SamplePup")!
         let now = Date()
-        let artwork1 = ArtworkWrapper(caption: "1", image: testImage, created: now, rating: 1)
+        let artwork1 = ArtworkWrapper(caption: "3", image: testImage, created: now, rating: 1)
         
         do {
             var fetch = try ArtworkWrapper.fetchAll()
@@ -93,8 +91,7 @@ class ArtworkWrapperTests: XCTestCase {
             XCTAssertEqual(fetch.count, 0)
             
         } catch {
-            print("ERROR: %@", error)
-            XCTFail()
+            XCTFail("ERROR: \(error)")
         }
     }
     
@@ -114,11 +111,15 @@ class ArtworkWrapperTests: XCTestCase {
         let testImage = UIImage(named: "SamplePup")!
         let now = Date()
         let later = Date(timeInterval: 100, since: now)
+        let before = Date(timeInterval: -100, since: now)
         
-        let artwork1 = ArtworkWrapper(caption: "1", image: testImage, created: now, rating: 1)
-        let artwork2 = ArtworkWrapper(caption: "2", image: testImage, created: later, rating: 1)
+        let artwork1 = ArtworkWrapper(caption: "4", image: testImage, created: now, rating: 1)
+        let artwork2 = ArtworkWrapper(caption: "5", image: testImage, created: later, rating: 2)
+        let artwork3 = ArtworkWrapper(caption: "6", image: testImage, created: before, rating: 3)
         
-        guard let _ = try? artwork1.save(), let _ = try? artwork2.save() else {
+        guard let _ = try? artwork1.save(), 
+              let _ = try? artwork2.save(), 
+              let _ = try? artwork3.save() else {
             XCTFail("Failed to save artwork")
             return
         }
@@ -126,11 +127,7 @@ class ArtworkWrapperTests: XCTestCase {
         // Now expect our 2 entries
         let _ = ArtworkWrapper.fetchAllRx().subscribe(
             onNext: { response in
-                XCTAssertEqual(response.count, 2)
-                XCTAssertEqual(response[0].rating, 1)
-                XCTAssertEqual(response[1].rating, 1)
-                XCTAssertEqual(response[0].caption, "2")
-                XCTAssertEqual(response[1].caption, "1")
+                XCTAssertEqual(response.count, 3)
         }, 
             onError: { error in
                 XCTFail("Failed with error thrown \(error)")
@@ -139,11 +136,13 @@ class ArtworkWrapperTests: XCTestCase {
         // Do the same but test ordering it by created date
         let _ = ArtworkWrapper.fetchAllRx(orderByCreatedDate: true).subscribe(
             onNext: { response in
-                XCTAssertEqual(response.count, 2)
-                XCTAssertEqual(response[0].rating, 1)
+                XCTAssertEqual(response.count, 3)
+                XCTAssertEqual(response[0].rating, 3)
                 XCTAssertEqual(response[1].rating, 1)
-                XCTAssertEqual(response[0].caption, "1")
-                XCTAssertEqual(response[1].caption, "2")
+                XCTAssertEqual(response[2].rating, 2)
+                XCTAssertEqual(response[0].caption, "6")
+                XCTAssertEqual(response[1].caption, "4")
+                XCTAssertEqual(response[2].caption, "5")
         }, 
             onError: { error in
                 XCTFail("Failed with error thrown \(error)")
@@ -153,8 +152,9 @@ class ArtworkWrapperTests: XCTestCase {
     
     // MARK:- Test rig for mocked persistent data stores
     
-    /// Create a mock persistent CoreData container to inject into ArtworkWrapper, from which we'll read/write
-    /// data. This container will be stored in memory so we don't need to erase anything between test runs.
+    /// Create a mock persistent CoreData container to inject into ArtworkWrapper, from
+    /// which we'll read/write data. This container will be stored in memory so we don't
+    /// need to erase anything between test runs.
     static var mockPersistentContainer: NSPersistentContainer = {
         
         let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: ArtworkWrapperTests.self)] )!

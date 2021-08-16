@@ -40,12 +40,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        
-        // Little debug on app foregrounding to see what we have in the library.
-        // TODO: Delete this once library VC is working
-        if let allArt = try? ArtworkWrapper.fetchAll() {
-            NSLog("DEBUG: Found \(allArt.count) pieces of art in the library!")
-        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

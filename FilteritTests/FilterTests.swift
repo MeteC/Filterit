@@ -33,12 +33,10 @@ class FilterTests: XCTestCase {
             let outputImage = filterType.apply(to: testImage)
             XCTAssertNotNil(outputImage)
             
-            // TODO: What?? Why does this happen when we use FilterList.values, but NOT when we use values declared in this test file??
             if filterType is NoneFilter {
                 // none case should have a total pass-through effect on the image
-                print("xxxx")
                 XCTAssertEqual(testImage, filterType.apply(to: testImage))
-            } 
+            }
         }
     }
 

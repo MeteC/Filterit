@@ -125,25 +125,24 @@ class ArtworkWrapper {
     }
     
     /// Reactive version of the fetch method, retrieves all stored `Artwork` entities
-    /// and returns them as an Observable. Note method doesn't throw, Observable will
+    /// and returns them as a Single observable. Note method doesn't throw, Single will
     /// error instead.
     /// - Parameter orderByCreatedDate: Set true to order the results by created date (ascending)
-    public static func fetchAllRx(orderByCreatedDate: Bool = false) -> Observable<[ArtworkWrapper]> {
-        return Observable.create { observer in
+    public static func fetchAllRx(orderByCreatedDate: Bool = false) -> Single<[ArtworkWrapper]> {
+        return Single.create { observer in
             do {
                 let fetchRequest: NSFetchRequest<Artwork> = Artwork.fetchRequest()
                 let objects = try managedContext.fetch(fetchRequest)
                 let fetch = objects.map { ArtworkWrapper(managedObject: $0) }
                 
                 if orderByCreatedDate {
-                    observer.on(.next(fetch.sorted(by: { $0.created < $1.created })))
+                    observer(.success(fetch.sorted(by: { $0.created < $1.created })))
                 } else {
-                    observer.on(.next(fetch))
+                    observer(.success(fetch))
                 }
                 
-                observer.on(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.failure(error))
             }
             
             return Disposables.create()

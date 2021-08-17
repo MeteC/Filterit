@@ -101,10 +101,10 @@ class ArtworkWrapperTests: XCTestCase {
         
         // initial test for zero entries
         let _ = ArtworkWrapper.fetchAllRx().subscribe(
-            onNext: { response in
+            onSuccess: { response in
                 XCTAssertEqual(response.count, 0)
         }, 
-            onError: { error in
+            onFailure: { error in
                 XCTFail("Failed with error thrown \(error)")
         })
         
@@ -126,16 +126,16 @@ class ArtworkWrapperTests: XCTestCase {
         
         // Now expect our 2 entries
         let _ = ArtworkWrapper.fetchAllRx().subscribe(
-            onNext: { response in
+            onSuccess: { response in
                 XCTAssertEqual(response.count, 3)
         }, 
-            onError: { error in
+            onFailure: { error in
                 XCTFail("Failed with error thrown \(error)")
         })
         
         // Do the same but test ordering it by created date
         let _ = ArtworkWrapper.fetchAllRx(orderByCreatedDate: true).subscribe(
-            onNext: { response in
+            onSuccess: { response in
                 XCTAssertEqual(response.count, 3)
                 XCTAssertEqual(response[0].rating, 3)
                 XCTAssertEqual(response[1].rating, 1)
@@ -144,7 +144,7 @@ class ArtworkWrapperTests: XCTestCase {
                 XCTAssertEqual(response[1].caption, "4")
                 XCTAssertEqual(response[2].caption, "5")
         }, 
-            onError: { error in
+            onFailure: { error in
                 XCTFail("Failed with error thrown \(error)")
         })
     }

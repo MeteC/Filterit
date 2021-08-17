@@ -31,6 +31,10 @@
 		CA84C4C223CE177B00ECF276 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */; };
 		CA920C3423741FF20086484D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA920C3223741FF20086484D /* Localizable.strings */; };
 		CA9DB85526CBD43800AFC84D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA9DB85426CBD43800AFC84D /* README.md */; };
+		CA9DB85726CC01C100AFC84D /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85626CC01C000AFC84D /* LibraryViewModel.swift */; };
+		CA9DB85926CC0D7000AFC84D /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */; };
+		CA9DB85B26CC106C00AFC84D /* ShowArtworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */; };
+		CA9DB85E26CC12B900AFC84D /* ArtworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CABB8FD126BD4EC800B1A2BC /* ZoomBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */; };
@@ -87,6 +91,10 @@
 		CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		CA920C3323741FF20086484D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA9DB85426CBD43800AFC84D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CA9DB85626CC01C000AFC84D /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+		CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
+		CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowArtworkViewModel.swift; sourceTree = "<group>"; };
+		CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkViewModel.swift; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomBlurFilter.swift; sourceTree = "<group>"; };
@@ -218,6 +226,17 @@
 			path = Filter;
 			sourceTree = "<group>";
 		};
+		CA9DB85C26CC114500AFC84D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */,
+				CA9DB85626CC01C000AFC84D /* LibraryViewModel.swift */,
+				CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */,
+				CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		CABB8FCF26BD4EAF00B1A2BC /* Types */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +255,7 @@
 		CACDCC5823439547005434FB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CA9DB85C26CC114500AFC84D /* ViewModels */,
 				CA466EBA23425065009C8BB7 /* ApplyFilterViewController.swift */,
 				CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */,
 				CA84C4C123CE177B00ECF276 /* LibraryViewController.swift */,
@@ -436,16 +456,20 @@
 				CABB8FD626BD4F0600B1A2BC /* ColourInvertFilter.swift in Sources */,
 				CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */,
 				CABB8FDB26BD542900B1A2BC /* NoirFilter.swift in Sources */,
+				CA9DB85E26CC12B900AFC84D /* ArtworkViewModel.swift in Sources */,
 				CABB8FDE26BD549F00B1A2BC /* PosterizeFilter.swift in Sources */,
 				CA84C4C223CE177B00ECF276 /* LibraryViewController.swift in Sources */,
 				CABB8FD926BD4F0600B1A2BC /* VignetteFilter.swift in Sources */,
 				CABB8FD826BD4F0600B1A2BC /* NoneFilter.swift in Sources */,
+				CA9DB85726CC01C100AFC84D /* LibraryViewModel.swift in Sources */,
 				CA6DA4E526C40C37009A5A06 /* RatingView.swift in Sources */,
 				CA4F1BDF233A53B500DDBECB /* APIManager.swift in Sources */,
 				CACDCC56234381A1005434FB /* SaveDialog.swift in Sources */,
 				CAC41A6624F40AA8009C1E8D /* ShowArtworkViewController.swift in Sources */,
 				CABB8FD126BD4EC800B1A2BC /* ZoomBlurFilter.swift in Sources */,
+				CA9DB85926CC0D7000AFC84D /* ViewModelFactory.swift in Sources */,
 				CAC6C2B6238C76A70039711C /* FilterGraph.swift in Sources */,
+				CA9DB85B26CC106C00AFC84D /* ShowArtworkViewModel.swift in Sources */,
 				CABB8FD726BD4F0600B1A2BC /* SepiaFilter.swift in Sources */,
 				CA4F1BE1233A558B00DDBECB /* Image.swift in Sources */,
 				CA4F1BB6233A281500DDBECB /* NetworkImageSelectViewController.swift in Sources */,

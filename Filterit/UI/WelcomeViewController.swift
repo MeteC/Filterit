@@ -9,14 +9,18 @@
 import UIKit
 import RxSwift
 
-
+/// The "landing page" welcomes users. They can switch tabs to show the library, or
+/// start the artwork creation process.
 class WelcomeViewController: UIViewController {
     
+    // UI
     @IBOutlet weak var titleStackView: UIStackView!
-    @IBOutlet weak var welcomeTitleLabel: UILabel!
-    
 
+    // Rx
     let disposeBag = DisposeBag()
+    
+    
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,38 +48,4 @@ class WelcomeViewController: UIViewController {
         self.titleStackView.axis = landscape ? .horizontal : .vertical
         self.titleStackView.alignment = landscape ? .firstBaseline : .center
     }
-    
-    
-    
-    // MARK: - Development Rig for Quicker Debugging
-    
-    @IBAction func pressTestsButton(_ sender: Any) {
-        
-        // keeping old tests around, rather than overwriting them..
-        let testType = 1
-        
-        switch testType {
-        case 0: // SaveDialog test pops up dialog and outputs response
-            SaveDialog().showAlert(title: "Test Save Dialog", subtitle: nil)
-                //            .debug()
-                .subscribe(
-                    onSuccess: { (result) in
-                        print("\(#function) result \(result)")
-                    }, 
-                    onFailure: { (error) in
-                        print("\(#function) error \(error)")
-                    })
-                .disposed(by: disposeBag)
-            
-        case 1: // ApplyFilterVC early tests
-            let vc = self.storyboard!.instantiateViewController(withIdentifier: "ApplyFilterViewController") as! ApplyFilterViewController
-            vc.setInputImage(UIImage(named: "SamplePup")!)
-            self.show(vc, sender: nil)
-            
-        default:
-            break
-        }
-        
-    }
-
 }

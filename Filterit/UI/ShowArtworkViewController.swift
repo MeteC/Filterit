@@ -17,11 +17,8 @@ import FCAlertView
 /// Has a hero transition like in ImageApprovalViewController (albeit simpler).
 class ShowArtworkViewController: UIViewController {
 
-    /// To be set during segue, to show the correct artwork
-    private var artwork: ArtworkWrapper?
-    
-    /// And we'll store a weak reference to the underlying image view from which we're transitioning
-    private weak var underlyingImageView: UIImageView?
+    /// To be set prior to view loading, via prepare(viewModel:)
+    private var viewModel: ShowArtworkViewModel?
 
     // Rx Gear
     private let disposeBag = DisposeBag()
@@ -45,27 +42,26 @@ class ShowArtworkViewController: UIViewController {
     
     /// Call this during segue to set artwork correctly and prepare our appearance transition
     /// - Parameters:
-    ///   - artwork: The artwork to show
-    ///   - underlyingImageView: The origin image view we'll use as the start point for
-    ///   our hero transition animation
-    public func prepare(with artwork: ArtworkWrapper, underlyingImageView: UIImageView) {
-        self.artwork = artwork
-        self.underlyingImageView = underlyingImageView
+    ///   - viewModel: The ShowArtworkViewModel to setup with
+    public func prepare(viewModel: ShowArtworkViewModel) {
+        self.viewModel = viewModel
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let underlyingImageView = self.underlyingImageView, let artwork = self.artwork else {
+        guard let viewModel = self.viewModel else {
             NSLog("Error - must call prepare(with...) before loading view!")
             return
         }
         
         // Do any additional setup after loading the view.
-        self.artworkImageView.image = artwork.image
+        self.artworkImageView.image = viewModel.image
         
         // Figure out start frame relative to entire view
-        let startFrame = self.view.convert(underlyingImageView.frame, from: underlyingImageView.superview)
+        let startFrame = //viewModel.heroStartFrame(relativeTo: self.view)
+            self.view.convert(viewModel.heroTransitionSourceImageView.frame, 
+                              from: viewModel.heroTransitionSourceImageView.superview)
         
         // calculate starting constraints from frame
         self.artworkImageConstraintTop.constant = startFrame.minY
@@ -74,8 +70,8 @@ class ShowArtworkViewController: UIViewController {
         self.artworkImageConstraintRight.constant = self.view.frame.width - startFrame.maxX
         
         // details & rating
-        self.detailsCaptionLabel.text = artwork.caption
-        self.ratingsView.rating = Int(artwork.rating)
+        self.detailsCaptionLabel.text = viewModel.caption
+        self.ratingsView.rating = Int(viewModel.rating)
         
         setupActionsRx()
     }
@@ -126,7 +122,7 @@ class ShowArtworkViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // Add share button action. We can ensure image is valid before binding our action
-        if let image = self.artwork?.image {
+        if let image = self.viewModel?.image {
             shareButton.rx.tap
                 .map { image }
                 .bind(to: shareActionBinder)
@@ -152,7 +148,7 @@ class ShowArtworkViewController: UIViewController {
         // Animate in hero transition, and bring up details panel.
         // First hide the original artwork view while the hero transition is occurring, 
         // to prevent visibility of the backing layer.
-        self.underlyingImageView?.isHidden = true
+        viewModel?.heroTransitionSourceImageView.isHidden = true
         
         // Fade background to dark, then animate our artwork into full frame.
         // We'll also fade the details view in
@@ -180,7 +176,7 @@ class ShowArtworkViewController: UIViewController {
             }
         } completion: { (finished) in
             // on finish undo change to underlying view layers
-            self.underlyingImageView?.isHidden = false
+            self.viewModel?.heroTransitionSourceImageView.isHidden = false
         }
         
         UIView.animate(withDuration: heroTransitionDuration, delay: backgroundFadeDuration) { 

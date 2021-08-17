@@ -166,16 +166,17 @@ class NetworkImageSelectViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // Not checking segue identifier, as our destination VC type is more interesting in this case
-        // Note we can pass the UIImage we'll be filtering through the segue as the sender, and thus prevent
-        // keeping any references to the selected image here in our class
+        // Not checking segue identifier, as our destination VC type is more interesting in
+        // this case Note we can pass the UIImage we'll be filtering through the segue as
+        // the sender, and thus prevent keeping any references to the selected image here
+        // in our class
         
         if let vc = segue.destination as? ApplyFilterViewController {
             if let image = sender as? UIImage {
-                vc.setInputImage(image)
+                vc.prepare(viewModel: ViewModelFactory.createApplyFilterViewModel(inputImage: image))
             } else {
-                // Show something... But we actually want to push the right UIImage through as the sender here
-                vc.setInputImage(UIImage(named: "SamplePup")!) 
+                // Show something, but alert the programmer - something went wrong.
+                vc.prepare(viewModel: ViewModelFactory.createApplyFilterViewModel(inputImage: UIImage(named: "SamplePup")!)) 
                 NSLog("Error - called applyFilter segue without passing the image as sender. Showing default image.")
             }
         }

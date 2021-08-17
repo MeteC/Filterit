@@ -17,16 +17,16 @@ class ApplyFilterViewController: UIViewController {
     @IBOutlet weak var resultImageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     
-    /// Set this before launching the VC, holds the input photo / image
-    private var inputImage: UIImage? = nil
+    /// Set this before launching the VC via prepare
+    private var viewModel: ApplyFilterViewModel?
     
     private let saveDialog = SaveDialog()
     private let disposeBag = DisposeBag()
     
     
-    /// Set the input image before launching the VC, or you'll be told..
-    public func setInputImage(_ image: UIImage) {
-        self.inputImage = image
+    /// Be sure to set the view model before launching the VC, thus:
+    public func prepare(viewModel: ApplyFilterViewModel) {
+        self.viewModel = viewModel
     }
 
     
@@ -35,12 +35,15 @@ class ApplyFilterViewController: UIViewController {
         self.title = NSLocalizedString("Select Filter", comment: "")
 
         // Did you remember to set the input image?
-        assert(self.inputImage != nil, "Input image not set for ApplyFilterVC - be sure to set it before displaying ApplyFilterViewController!")
+        guard let viewModel = self.viewModel else {
+            NSLog("Error - must call prepare(with...) before loading view!")
+            return
+        }
         
         // Apply the image to our view.. the user can now change this using filter controls
-        resultImageView.image = inputImage
+        resultImageView.image = viewModel.inputImage
         
-        setupRx()
+        setupRx(viewModel: viewModel)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +57,7 @@ class ApplyFilterViewController: UIViewController {
     
     
     /// Set up all Rx bindings for this controller
-    private func setupRx() {
+    private func setupRx(viewModel: ApplyFilterViewModel) {
         
         // We can create our filter collection data source from our FilterType enumerator, since it's case iterable
         Observable
@@ -64,7 +67,7 @@ class ApplyFilterViewController: UIViewController {
             
             let viewModel = FilterTypeViewModel(filter: filter)
             
-            cell.filterTitle.text = viewModel.presentationTitle()
+            cell.filterTitle.text = viewModel.presentationTitle
             cell.sampleImageView.image = viewModel.presentationImage()
             
             // add a border to the image
@@ -77,7 +80,7 @@ class ApplyFilterViewController: UIViewController {
         // tap handling - apply the filter, let's also indicate which filter is currently applied
         filterCollectionView.rx.modelSelected(FilterType.self)
             .subscribe(onNext: { filterType in
-                let img = filterType.apply(to: self.inputImage!)
+                let img = filterType.apply(to: viewModel.inputImage)
                 self.resultImageView.image = img
             })
             .disposed(by: disposeBag)
@@ -102,10 +105,8 @@ class ApplyFilterViewController: UIViewController {
                     
                     NSLog("Saving image with caption \(captionText) and rating \(rating)")
                     
-                    let artwork = ArtworkWrapper(caption: captionText, image: finalImage, created: Date(), rating: Int16(rating))
-                    
                     do {
-                        try artwork.save()
+                        try viewModel.save(result: finalImage, caption: captionText, date: Date(), rating: rating)
                         self.showAlertMessage(NSLocalizedString("Successfully saved image!", comment: ""), asError: false)
                         
                     } catch {

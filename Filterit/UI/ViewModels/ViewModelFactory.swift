@@ -39,11 +39,26 @@ struct ViewModelFactory {
                       rating: libraryThumbCellViewModel.rating)
     }
     
+    /// Create a concrete ApplyFilterViewModel, given an input image for processing.
+    /// - Parameter inputImage: The image to be eventually filtered.
+    public static func createApplyFilterViewModel(inputImage: UIImage) -> ApplyFilterViewModel {
+        return ApplyFilterViewModelImpl(inputImage: inputImage)
+    }
 }
 
 
 // MARK:- Concrete Implementations
 extension ViewModelFactory {
+    
+    /// Default ApplyFilterViewModel that saves artwork to our CoreData layer via ArtworkWrapper
+    private struct ApplyFilterViewModelImpl: ApplyFilterViewModel {
+        let inputImage: UIImage
+        
+        func save(result: UIImage, caption: String, date: Date, rating: Int) throws {
+            let artwork = ArtworkWrapper(caption: caption, image: result, created: date, rating: Int16(rating))
+            try artwork.save()
+        }
+    }
     
     /// The simple default implementation of our LibraryViewModel.
     /// Accesses our ArtworkWrapper model layer and provides view models for all our

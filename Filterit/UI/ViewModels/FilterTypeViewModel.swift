@@ -17,7 +17,7 @@ struct FilterTypeViewModel {
     let filter: FilterType
     
     /// Presentation title for our filter
-    func presentationTitle() -> String {
+    var presentationTitle: String {
         filter.presentationTitle
     }
     

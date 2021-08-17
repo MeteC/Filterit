@@ -35,6 +35,7 @@
 		CA9DB85926CC0D7000AFC84D /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */; };
 		CA9DB85B26CC106C00AFC84D /* ShowArtworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */; };
 		CA9DB85E26CC12B900AFC84D /* ArtworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */; };
+		CA9DB86026CC151000AFC84D /* ApplyFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9DB85F26CC151000AFC84D /* ApplyFilterViewModel.swift */; };
 		CA9F05C3235B1D1200294CEC /* ImageApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */; };
 		CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */; };
 		CABB8FD126BD4EC800B1A2BC /* ZoomBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */; };
@@ -95,6 +96,7 @@
 		CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowArtworkViewModel.swift; sourceTree = "<group>"; };
 		CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkViewModel.swift; sourceTree = "<group>"; };
+		CA9DB85F26CC151000AFC84D /* ApplyFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyFilterViewModel.swift; sourceTree = "<group>"; };
 		CA9F05C2235B1D1200294CEC /* ImageApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageApprovalViewController.swift; sourceTree = "<group>"; };
 		CAAA56F123410EDB007FFA98 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CABB8FD026BD4EC800B1A2BC /* ZoomBlurFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomBlurFilter.swift; sourceTree = "<group>"; };
@@ -221,7 +223,6 @@
 				CABBCC7525D06B8700A8CA1B /* FilterList.swift */,
 				CA51939D234F4A9B00403122 /* FilterType.swift */,
 				CAC6C2B5238C76A70039711C /* FilterGraph.swift */,
-				CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -229,7 +230,9 @@
 		CA9DB85C26CC114500AFC84D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				CA9DB85F26CC151000AFC84D /* ApplyFilterViewModel.swift */,
 				CA9DB85D26CC12B900AFC84D /* ArtworkViewModel.swift */,
+				CAC6C2B2238C310D0039711C /* FilterTypeViewModel.swift */,
 				CA9DB85626CC01C000AFC84D /* LibraryViewModel.swift */,
 				CA9DB85A26CC106C00AFC84D /* ShowArtworkViewModel.swift */,
 				CA9DB85826CC0D7000AFC84D /* ViewModelFactory.swift */,
@@ -483,6 +486,7 @@
 				CA466EBB23425065009C8BB7 /* ApplyFilterViewController.swift in Sources */,
 				CA4F1BB4233A281500DDBECB /* SceneDelegate.swift in Sources */,
 				CAAA56F223410EDB007FFA98 /* WelcomeViewController.swift in Sources */,
+				CA9DB86026CC151000AFC84D /* ApplyFilterViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

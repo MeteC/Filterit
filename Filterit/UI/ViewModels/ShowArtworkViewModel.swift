@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// ViewModel for our ShowArtworkViewController (for example). 
+/// ViewModel suitable for our ShowArtworkViewController (just for example ;-))
 /// 
 /// Presents the basic artwork requirements of image, caption, and rating, as well
 /// as the source image view from which to start our hero transition, if the

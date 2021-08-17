@@ -51,6 +51,10 @@ class ImageApprovalViewController: UIViewController {
     /// And the preloaded thumb image
     public var imageThumb: UIImage?
     
+    /// We'll pass a hint back to whoever is waiting for `acceptBlock` to fire, as to
+    /// whether they might expect the image to already be cached or not.
+    private var isImageFullyCachedHint = false
+    
     /// If you set this before showing the vc, we'll transition in using the "hero"
     /// transition. Otherwise we skip the transition.
     public var heroTransitionStartFrame: CGRect?
@@ -62,8 +66,9 @@ class ImageApprovalViewController: UIViewController {
         }
     }
     
-    /// Closure to run when accept button is pressed, gets provided the relevant image object
-    public var acceptBlock: ((Image) -> ())?
+    /// Closure to run when accept button is pressed, gets provided the relevant image
+    /// object plus a hint as to whether the image is already cached locally.
+    public var acceptBlock: ((_ img: Image, _ isCachedHint: Bool) -> ())?
     
     /// Closure to run when cancel button is pressed
     public var cancelBlock: (() -> ())?
@@ -106,6 +111,8 @@ class ImageApprovalViewController: UIViewController {
         fullResImageView.moa.url = image?.url 
         fullResImageView.moa.onSuccess = { image in
             NSLog("Fading in full res image!")
+            self.isImageFullyCachedHint = true
+            
             UIView.animate(withDuration: 0.4, delay: 1.0, animations: { 
                 self.thumbImageView.alpha = 0
             }, completion: nil)
@@ -156,7 +163,7 @@ class ImageApprovalViewController: UIViewController {
     
     @IBAction func pressAccept(_ sender: Any) {
         if let image = self.image {
-            self.acceptBlock?(image)
+            self.acceptBlock?(image, isImageFullyCachedHint)
         } else {
             NSLog("Warning - pressed accept for nil image")
         }
@@ -167,13 +174,17 @@ class ImageApprovalViewController: UIViewController {
     
     
     /// The hero transition:
+    /// 
     /// 1. Start with the VC transparent on top, render the thumbnail perfectly on top
     /// of it's start frame so it should look like nothing has changed.
+    /// 
     /// 2. Animate the location and size of the image to it's final frame
     /// (imageView.frame as described in the storyboard.)
+    /// 
     /// 3. At the same time (maybe with slight delay?) fade in the dialog backgrounds -
     /// the dark translucency of the background view and the white dialog frame +
     /// buttons.
+    /// 
     /// Meanwhile, we're showing a thumbnail - we can use this opportunity to pull the
     /// full size image and, once we have it, update the image with the higher
     /// resolution version (cross fading?) Note this step is taken care of by how we set

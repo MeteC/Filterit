@@ -108,16 +108,25 @@ class NetworkImageSelectViewController: UIViewController {
                                                      startFrame: self.thumbCollectionView.convert(layout.frame, to: self.thumbCollectionView.superview), 
                                                      acceptButtonTitle: NSLocalizedString("Select Filter", comment: "")) 
                     
-                    vc.acceptBlock = { [weak self] image in
+                    vc.acceptBlock = { [weak self] (image, cachedHint) in
                         
                         // Accept block, using image as sender
                         // Let's download the image first if moa doesn't already have it cached..
+                        // As an optimisation, I pass a cached hint back from the ImageApprovalViewController, so we can skip the HUD if we know we're bare milliseconds away from having the full-res image already.
+                        if !cachedHint { 
+                            self?.setHudVisible(true) 
+                        }
                         
-                        self?.setHudVisible(true)
                         self?.moa.onSuccess = { [weak self] fullResImage in
                             
                             self?.setHudVisible(false)
-                            vc.view.removeFromSuperview()
+                            
+                            // Fading the view out before removing it makes the transition look a lot more buttery.
+                            UIView.animate(withDuration: 0.25) { 
+                                vc.view.alpha = 0
+                            } completion: { _ in
+                                vc.view.removeFromSuperview()
+                            }
                             
                             NSLog("Moa provided full-res image from \(image.url)")
                             self?.performSegue(withIdentifier: "applyFilter", sender: fullResImage)
@@ -188,15 +197,18 @@ class NetworkImageSelectViewController: UIViewController {
     /// Ensure progress UI is displayed/hidden appropriately
     private func pullAPIData() -> Observable<[Image]> {
         
-        // this API request can be super quick - so quick that the HUD UI popping up looks almost like a glitch. I'll put in a minimum display time of 0.5 secs to avoid that 
+        // this API request can be super quick - so quick that the HUD UI popping up looks
+        // almost like a glitch. I'll put in a minimum display time of 0.5 secs to avoid
+        // that
         let startTime = Date()
         
         // Use driver trait to ensure main thread + no errors, use side-effects for HUD display
         return APIManager().listImages()
             .asDriver(onErrorJustReturn: [])
             .do(afterCompleted: { 
-                let deadline = DispatchTime.now() + max(0.5, Date().timeIntervalSince(startTime))
-                DispatchQueue.main.asyncAfter(deadline: deadline) { 
+                let timeElapsed = Date().timeIntervalSince(startTime)
+                let timeToWait = (timeElapsed < 0.5) ? 0.5 : 0
+                DispatchQueue.main.asyncAfter(deadline: .now() + timeToWait) { 
                     self.setHudVisible(false)
                 }
             }, onSubscribed: { 

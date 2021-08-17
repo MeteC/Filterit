@@ -74,11 +74,7 @@ extension ViewModelFactory {
     
     /// Our default LibrayThumbCell ViewModel is a very thin wrapper around our artwork.
     private struct LibraryThumbCellViewModelImpl: LibraryThumbCellViewModel {    
-        private let artwork: ArtworkWrapper
-        
-        internal init(artwork: ArtworkWrapper) {
-            self.artwork = artwork
-        }
+        fileprivate let artwork: ArtworkWrapper
         
         public var image: UIImage? { artwork.image }
         public var rating: Int { Int(artwork.rating) }

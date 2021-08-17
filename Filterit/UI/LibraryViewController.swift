@@ -88,8 +88,6 @@ class LibraryViewController: UIViewController {
                 return
             }
             
-//            destination.prepare(with: cellViewModel.artwork, 
-//                                underlyingImageView: imageView)
             destination.prepare(viewModel: ViewModelFactory.createShowArtworkViewModel(from: cellViewModel, startingImageView: imageView))
         }
     }

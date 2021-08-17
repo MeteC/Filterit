@@ -9,17 +9,25 @@
 import UIKit
 import RxSwift
 
-/// Our library collection view. Displays our current library of images and permits interaction
+
+/// Our library collection view. Displays our current library of images; enables
+/// user to tap to view artwork.
 class LibraryViewController: UIViewController {
 
-    /// As in IB
+    // (Segue name as in IB)
     private static let segueNameShowArtwork = "showArtwork"
     
-    // UI Gear
+    // UI
     @IBOutlet weak var collectionView: UICollectionView!
     
-    // Rx Gear
+    /// ViewModel dependency (injectable). Defaults to our "core" implementation.
+    public var viewModel: LibraryViewModel = ViewModelFactory.createLibraryViewModel()
+    
+    // Rx
     private let disposeBag = DisposeBag()
+    
+    
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,23 +39,24 @@ class LibraryViewController: UIViewController {
     /// Set up all Rx bindings for this controller
     private func setupRx() {
         
-        // on appear, we want to fetch all our library entries
         let onAppear = self.rx
             .methodInvoked(#selector(viewWillAppear(_:)))
-            .flatMapLatest { _ in ArtworkWrapper.fetchAllRx() }
         
-        // and bind them to our collection view
-        onAppear.bind(to: collectionView.rx.items(cellIdentifier: "LibraryCell", cellType: LibraryThumbCell.self)) {
+        // On view appearance, pull all artwork and bind them to our collection view
+        onAppear
+            .flatMapLatest { _ in self.viewModel.fetchCellModels() }
+            .bind(to: collectionView.rx.items(cellIdentifier: "LibraryCell", cellType: LibraryThumbCell.self)) {
             (row, element, cell) in
-            cell.apply(artwork: element)
+                cell.apply(viewModel: element)
         }
         .disposed(by: disposeBag)
         
         
         // On selection we need to pull the starting frame of the image (for transition effect), as well
         // as the artwork in question. Using a zip to combine model and item selected sequences.
-        Observable.zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(ArtworkWrapper.self))
-            .subscribe(onNext: { (indexPath, artwork) in
+        Observable.zip(collectionView.rx.itemSelected, 
+                       collectionView.rx.modelSelected(LibraryThumbCellViewModel.self))
+            .subscribe(onNext: { (indexPath, cellViewModel) in
                 guard let cell = self.collectionView.cellForItem(at: indexPath) as? LibraryThumbCell else {
                     assert(false, "itemSelected failed to provide cell/layout")
                     return
@@ -55,7 +64,7 @@ class LibraryViewController: UIViewController {
                 
                 // Pass tuple of required info as sender data
                 self.performSegue(withIdentifier: LibraryViewController.segueNameShowArtwork, 
-                                  sender: (artwork, cell.imageView))
+                                  sender: (cellViewModel, cell.imageView))
             })
             .disposed(by: disposeBag)
     }
@@ -73,12 +82,15 @@ class LibraryViewController: UIViewController {
     /// Currently just segueing to "Show Artwork" view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ShowArtworkViewController {
-            // sender == (artwork, startFrame) tuple
-            guard let (artwork, imageView) = sender as? (ArtworkWrapper, UIImageView) else {
-                NSLog("Error - must pass (ArtworkWrapper, UIImageView) tuple as sender here")
+            // sender == (LibraryThumbCellViewModel, UIImageView) tuple
+            guard let (cellViewModel, imageView) = sender as? (LibraryThumbCellViewModel, UIImageView) else {
+                NSLog("Error - must pass (LibraryThumbCellViewModel, UIImageView) tuple as sender here")
                 return
             }
-            destination.prepare(with: artwork, underlyingImageView: imageView)
+            
+//            destination.prepare(with: cellViewModel.artwork, 
+//                                underlyingImageView: imageView)
+            destination.prepare(viewModel: ViewModelFactory.createShowArtworkViewModel(from: cellViewModel, startingImageView: imageView))
         }
     }
 }
@@ -122,10 +134,10 @@ class LibraryThumbCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var ratingView: RatingView!
     
-    /// In a more complex example we might use a ViewModel class for applying model
-    /// layer data to our UI, but this case is uber simple.
-    fileprivate func apply(artwork: ArtworkWrapper) {
-        imageView.image = artwork.image
-        ratingView.rating = Int(artwork.rating)
+    /// A very simple example of using a ViewModel, and perhaps not required for such a
+    /// small project, but this demonstrates the concept at least!
+    fileprivate func apply(viewModel: LibraryThumbCellViewModel) {
+        imageView.image = viewModel.image
+        ratingView.rating = viewModel.rating
     }
 }

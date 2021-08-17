@@ -8,7 +8,9 @@
 
 import UIKit
 
-/// A dialog style view controller that shows an image and allows us to accept or cancel it's being chosen for further processing. "Hero" transition built in (illusion to fly the image from another screen to it's full-size in this dialog)
+/// A dialog style view controller that shows an image and allows us to accept or
+/// cancel it's being chosen for further processing. "Hero" transition built in
+/// (illusion to fly the image from another screen to it's full-size in this dialog)
 class ImageApprovalViewController: UIViewController {
 
     // MARK: - Private and IB
@@ -20,11 +22,14 @@ class ImageApprovalViewController: UIViewController {
     @IBOutlet weak var heroTransitionImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     
-    // We'll use a thumbnail image view which will immediately have the image data, and a full resolution image view which will pull the higher resolution image from URL, fading out thumbImageView once it's ready
+    // We'll use a thumbnail image view which will immediately have the image data, and
+    // a full resolution image view which will pull the higher resolution image from
+    // URL, fading out thumbImageView once it's ready
     @IBOutlet weak var thumbImageView: UIImageView!
     @IBOutlet weak var fullResImageView: UIImageView!
     
-    // And this will hold both thumb and full resolution image views to fade them in/out as a group
+    // And this will hold both thumb and full resolution image views to fade them
+    // in/out as a group
     @IBOutlet weak var imageHolderView: UIView!
     
     // Handle landscape and portrait switches well:
@@ -34,13 +39,20 @@ class ImageApprovalViewController: UIViewController {
     
     // MARK:- Setup
     
-    /// Set this before showing vc, it's the image in question
+    /// Set this before showing vc, it's the image in question.
+    /// 
+    /// So this is basically being used as the ViewModel for this View
+    /// Controller. Technically it's a "data model", but it's also very simple, and
+    /// would be very easy to construct mock-ups just by manually creating an Image
+    /// struct rather than decoding it from JSON - so it's got all right the properties
+    /// of the ViewModel layer.
     public var image: Image?
     
     /// And the preloaded thumb image
     public var imageThumb: UIImage?
     
-    /// If you set this before showing the vc, we'll transition in using the "hero" transition. Otherwise we skip the transition.
+    /// If you set this before showing the vc, we'll transition in using the "hero"
+    /// transition. Otherwise we skip the transition.
     public var heroTransitionStartFrame: CGRect?
     
     /// Set this to change the accept button text. Default is "Apply Filter!"
@@ -56,7 +68,8 @@ class ImageApprovalViewController: UIViewController {
     /// Closure to run when cancel button is pressed
     public var cancelBlock: (() -> ())?
     
-    /// Little convenience method for setting up the various required properties for a nice hero transition effect
+    /// Little convenience method for setting up the various required properties for a
+    /// nice hero transition effect
     /// - Parameter image: the image in question
     /// - Parameter thumbnail: preloaded thumb image
     /// - Parameter startFrame: starting frame for the hero transition
@@ -88,7 +101,8 @@ class ImageApprovalViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // this will switch our image appearance from thumbnail quality to final image quality once it's downloaded
+        // this will switch our image appearance from thumbnail quality to final image
+        // quality once it's downloaded
         fullResImageView.moa.url = image?.url 
         fullResImageView.moa.onSuccess = { image in
             NSLog("Fading in full res image!")
@@ -119,7 +133,8 @@ class ImageApprovalViewController: UIViewController {
         self.selectCorrectConstraint(for: size)
     }
     
-    /// Select the appropriate constraint for "portrait" or "landscape" mode layouts (just based on aspect ratio of screen)
+    /// Select the appropriate constraint for "portrait" or "landscape" mode layouts
+    /// (just based on aspect ratio of screen)
     /// - Parameter size: super view size
     private func selectCorrectConstraint(for size: CGSize) {
         if size.width <= size.height {
@@ -152,10 +167,17 @@ class ImageApprovalViewController: UIViewController {
     
     
     /// The hero transition:
-    /// 1. Start with the VC transparent on top, render the thumbnail perfectly on top of it's start frame so it should look like nothing has changed.
-    /// 2. Animate the location and size of the image to it's final frame (imageView.frame as described in the storyboard.)
-    /// 3. At the same time (maybe with slight delay?) fade in the dialog backgrounds - the dark translucency of the background view and the white dialog frame + buttons
-    /// Meanwhile, we're showing a thumbnail - we can use this opportunity to pull the full size image and, once we have it, update the image with the higher resolution version (cross fading?) Note this step is taken care of by how we set up our imageView in our view controller lifecycle methods above
+    /// 1. Start with the VC transparent on top, render the thumbnail perfectly on top
+    /// of it's start frame so it should look like nothing has changed.
+    /// 2. Animate the location and size of the image to it's final frame
+    /// (imageView.frame as described in the storyboard.)
+    /// 3. At the same time (maybe with slight delay?) fade in the dialog backgrounds -
+    /// the dark translucency of the background view and the white dialog frame +
+    /// buttons.
+    /// Meanwhile, we're showing a thumbnail - we can use this opportunity to pull the
+    /// full size image and, once we have it, update the image with the higher
+    /// resolution version (cross fading?) Note this step is taken care of by how we set
+    /// up our imageView in our view controller lifecycle methods above
     private func prepHeroTransition(from startFrame: CGRect) {
         // initial conditions
         self.heroTransitionImageView.image = imageThumb
